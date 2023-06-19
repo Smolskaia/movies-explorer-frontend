@@ -3,7 +3,6 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 79px 70px 20px 70px;
-  position: sticky;
   bottom: 0;
 }
 .footer__text {
