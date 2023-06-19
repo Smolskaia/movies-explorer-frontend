@@ -15,8 +15,8 @@ function Main() {
       <main>
         <Promo />
         <AboutProject />
-        <Techs />
         <AboutMe />
+        <Techs />
         <Portfolio />
       </main>
       <Footer />
