@@ -6,6 +6,10 @@
   justify-content: space-between;
 }
 
+.header__logged-out {
+  background-color: #073042;
+}
+
 .header__button-wrapper {
   gap: 30px;
   display: flex;
