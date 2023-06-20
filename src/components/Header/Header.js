@@ -7,8 +7,7 @@ import burger from "../../images/header-burger.svg";
 import "./Header.css";
 
 function Header() {
-  // хук состояния useState используется для реализации условного 
-  // рендеринга в хедере
+  // реализация условного рендеринга в хедере
   const [isLoggedIn, setIsLoggedIn] = useState(false); // false/true
 
   return (
