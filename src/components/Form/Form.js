@@ -10,7 +10,7 @@ import './Form.css';
 import logo from "../../images/header-logo.svg";
 
 function Form(props) {
-  const { children, title, buttonText, question, linkText, link } = props
+  const { title, children, buttonText, question, linkText, link } = props
   return (
     <div className="form__container">
       <Link to="/" className="form__logo">

@@ -27,12 +27,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  min-height: 468px;
+  min-height: 375px;
   width: 100%;
 }
 
 .form__btn-save {
-  margin-top: 69px;
+  margin-top: 179px;
   height: 45px;
   background-color: #4285F4;
   color: #fff;
@@ -123,13 +123,16 @@
   }
 
   .form {
+    position: relative;
     min-height: 468px;
   }
 
   .form__btn-save {
     font-size: 12px;
     line-height: 15px;
-    margin-top: 157px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 
   .form__text {
