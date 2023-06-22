@@ -8,7 +8,7 @@ import "./Header.css";
 
 function Header() {
   // реализация условного рендеринга в хедере
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // false/true
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // false/true
 
   return (
     <>
