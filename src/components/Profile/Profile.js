@@ -6,7 +6,7 @@ function Profile() {
   return (
     
     <section className="profile">
-      <Header loggedIn={true}  />
+      <Header isLoggedIn={true}  />
       <div className='profile__container'>
         <h3 className="profile__title">Привет, Анна!</h3>
         <form className="profile__form" >

@@ -1,9 +1,7 @@
 .footer {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   padding: 79px 70px 20px 70px;
-  bottom: 0;
 }
 .footer__text {
   margin: 0;
@@ -43,13 +41,13 @@
   color: #3DDC84;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 880px) {
   .footer {
     padding: 79px 30px 20px 30px;
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 560px) {
   .footer {
     padding: 79px 10px 10px 10px;
   }

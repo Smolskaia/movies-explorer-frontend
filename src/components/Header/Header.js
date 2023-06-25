@@ -1,14 +1,15 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import logo from "../../images/header-logo.svg";
 import account from "../../images/account-image.svg";
 import burger from "../../images/header-burger.svg";
 import "./Header.css";
 
-function Header() {
+function Header(props) {
   // реализация условного рендеринга в хедере
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // false/true
+  const { /*handleMenuClick,*/ isLoggedIn } = props;
+  // const [isLoggedIn, setIsLoggedIn] = useState(true); // false/true
 
   return (
     <>
