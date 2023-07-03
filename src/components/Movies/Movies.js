@@ -6,7 +6,10 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import { cardsList } from '../../utils/constants';
 
-function Movies() {
+function Movies(props) {
+
+  const { cards, isSavedMoviesPage} = props;
+
 
   return (
     <section className="movies">
@@ -17,6 +20,7 @@ function Movies() {
         <SearchFilmForm/>
         <MoviesCardList
         cards={cardsList}
+        isSavedMoviesPage={false}
         />
       </main>
       <Footer />

@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import { savedMoviesList } from '../../utils/constants';
 
 function SavedMovies() {
+
   return (
     <section className="movies">
       <Header
@@ -16,6 +17,7 @@ function SavedMovies() {
         <SearchFilmForm/>
         <MoviesCardList
         cards={savedMoviesList}
+        isSavedMoviesPage={true}
         />
       </main>
       <Footer />

@@ -4,13 +4,9 @@ import MoviesCard from "../MoviesCard/MoviesCard.js";
 
 function MoviesCardList(props) {
 
-  const { cards } = props; 
-
-  // const [isSaved, setIsSaved] = useState(false);
-
-  // const handleSaveClick = () => {
-  //   setIsSaved(!isSaved);
-  // };
+  const { 
+    cards, 
+    isSavedMoviesPage } = props; 
 
   const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
   const [visibleCardsCount, setVisibleCardsCount] = useState(12);
@@ -37,16 +33,12 @@ function MoviesCardList(props) {
             duration={card.duration}
             image={card.image}
             name={card.nameRU}
-            // handleSaveClick={handleSaveClick}
-            // isSaved={isSaved}
             handleSaveClick={() => handleSaveClick(index)}
             isSaved={isSavedArray[index]}
+            isSavedMoviesPage={isSavedMoviesPage}
           />
         ))}
-        
-        
       </ul>
-      {/* <button className="elements__more-btn">Ещё</button> */}
       {visibleCardsCount < cards.length && (
         <button className="elements__more-btn" onClick={handleShowMoreClick}>
           Ещё
