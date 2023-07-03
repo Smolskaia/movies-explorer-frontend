@@ -1,0 +1,170 @@
+.burger-menu__container {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .burger-menu__container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+  }
+  
+  .burger-menu__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  
+  .burger-menu__wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 520px;
+    height: 100%;
+    background: #202020;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
+    z-index: 2;
+  }
+  
+  .burger-menu__close-btn {
+    position: absolute;
+    padding: 0;
+    top: 23px;
+    right: 23px;
+    width: 22px;
+    height: 22px;
+    background-image: url("../../images/close-menu-button.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .burger-menu__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .burger-menu__items {
+    list-style: none;
+    padding: 0;
+    margin-top: 159px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .burger-menu__items li {
+    margin-bottom: 28px;
+    width: 100%;
+    text-align: center; 
+  }
+  
+  .menu__item {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  .menu__item:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+  }
+  
+  .burger-menu__account-wrapper {
+    position: absolute;
+    bottom: 92px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .burger-menu__account {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #fff;
+    text-decoration: none;
+    width: 100px;
+    height: 32px;
+    background: transparent;
+  }
+  .burger-menu__account:hover {
+    cursor: pointer;
+    color: #3DDC84;
+  }
+  
+  
+  .burger-menu__account img {
+    padding: 8px 7.3px 8px 7.3px;
+    background-color: #313131;
+    width: 11px;
+    height: 14px;
+    border-radius: 4px;
+    transition: box-shadow 0.3s ease;
+  }
+  .burger-menu__account img:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px 0 #FFF;
+  }
+  
+}
+
+@media screen and (max-width: 521px) {
+  .burger-menu__overlay {
+    display: none;
+  }
+
+  .burger-menu__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #202020;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    padding-top: 0; 
+  }
+
+  .burger-menu__items {
+    margin-top: 144px; 
+  }
+
+  .burger-menu__account-wrapper {
+    position: absolute;
+    bottom: 48px; 
+    display: flex;
+    justify-content: center;
+  }
+}

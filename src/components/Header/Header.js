@@ -1,5 +1,4 @@
-import React from "react";
-// import { useState } from "react";
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from "../../images/header-logo.svg";
 import account from "../../images/account-image.svg";
@@ -7,9 +6,14 @@ import burger from "../../images/header-burger.svg";
 import "./Header.css";
 
 function Header(props) {
-  // реализация условного рендеринга в хедере
-  const { /*handleMenuClick,*/ isLoggedIn } = props;
-  // const [isLoggedIn, setIsLoggedIn] = useState(true); // false/true
+
+  const { isLoggedIn } = props;
+  
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  
+  const handleMenuClick = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
 
   return (
     <>
@@ -29,7 +33,7 @@ function Header(props) {
             Аккаунт
             <img src={account} alt="аккаунт" className='header__account-image'/>
           </Link>
-          <button className="header__button-burger">
+          <button className="header__button-burger" onClick={handleMenuClick}>
             <img src={burger} alt="бургер-меню" />
           </button>
         </div>

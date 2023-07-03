@@ -1,0 +1,27 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="32" height="32" fill="#E5E5E5"/>
+<g id="RESULT_768_MENU" clip-path="url(#clip0_891_3857)">
+<rect width="768" height="1024" transform="translate(-714 -22)" fill="#202020"/>
+<g id="menu-content">
+<g id="header_768">
+<rect id="back__COLOR:primary" x="-714" y="-22" width="768" height="74" fill="#202020"/>
+<g id="icon__COLOR:icon-main">
+<path id="icon__COLOR:icon-main_2" fill-rule="evenodd" clip-rule="evenodd" d="M16 7L-12 7V4L16 4V7Z" fill="white"/>
+<path id="icon__COLOR:icon-main_3" fill-rule="evenodd" clip-rule="evenodd" d="M16 17L-12 17V14L16 14V17Z" fill="white"/>
+<path id="icon__COLOR:icon-main_4" fill-rule="evenodd" clip-rule="evenodd" d="M16 27L-12 27V24L16 24V27Z" fill="white"/>
+</g>
+</g>
+<rect id="cover" opacity="0.3" x="-714" y="-22" width="768" height="1024" fill="black"/>
+<rect id="back__COLOR:primary_2" x="-466" y="-22" width="520" height="1024" fill="#202020"/>
+<g id="Group ">
+<rect id="text__COLOR:font-main" x="7.16016" y="9.28249" width="3" height="22" transform="rotate(-45 7.16016 9.28249)" fill="white"/>
+<rect id="text__COLOR:font-main_2" x="22.7168" y="7.16117" width="3" height="22" transform="rotate(45 22.7168 7.16117)" fill="white"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_891_3857">
+<rect width="768" height="1024" fill="white" transform="translate(-714 -22)"/>
+</clipPath>
+</defs>
+</svg>

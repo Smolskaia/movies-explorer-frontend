@@ -5,8 +5,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
-
-// import ErrorNotFound from "../ErrorNotFound/ErrorNotFound";
+import ErrorNotFound from "../ErrorNotFound/ErrorNotFound";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -24,8 +23,7 @@ function App() {
         <Route path="/profile" element={<Profile />}/>
         <Route path="/signin" element={<Login />}/>
         <Route path="/signup" element={<Register />}/>
-        
-        {/* <Route path="/error" element={<ErrorNotFound />}/> */}
+        <Route path="/*" element={<ErrorNotFound />}/>
 
       </Routes>
       </div>

@@ -444,5 +444,18 @@ export const savedMoviesList = [
     "movieId": 20,
     "nameRU": "Saimaa Gesture, The (Saimaa-ilmiö)",
     "nameEN": "Urban Cowboy"
+  },
+  {
+    "country": "France",
+    "director": "Heddi Ambrosch",
+    "duration": "17",
+    "year": 1993,
+    "description": "error: undefined method `id' for nil:NilClass",
+    "image": "http://dummyimage.com/206x100.png/dddddd/000000",
+    "trailerLink": "http://unc.edu/sociis.aspx?ipsum=egestas&praesent=metus&blandit=aenean&lacinia=fermentum&erat=donec&vestibulum=ut&sed=mauris&magna=eget&at=massa&nunc=tempor&commodo=convallis&placerat=nulla&praesent=neque&blandit=libero&nam=convallis&nulla=eget&integer=eleifend&pede=luctus&justo=ultricies&lacinia=eu&eget=nibh&tincidunt=quisque&eget=id&tempus=justo&vel=sit&pede=amet&morbi=sapien&porttitor=dignissim&lorem=vestibulum&id=vestibulum&ligula=ante&suspendisse=ipsum&ornare=primis&consequat=in&lectus=faucibus&in=orci&est=luctus&risus=et&auctor=ultrices&sed=posuere&tristique=cubilia&in=curae&tempus=nulla&sit=dapibus&amet=dolor&sem=vel&fusce=est&consequat=donec&nulla=odio&nisl=justo&nunc=sollicitudin&nisl=ut&duis=suscipit&bibendum=a&felis=feugiat&sed=et&interdum=eros&venenatis=vestibulum&turpis=ac&enim=est&blandit=lacinia&mi=nisi&in=venenatis&porttitor=tristique&pede=fusce&justo=congue&eu=diam&massa=id&donec=ornare&dapibus=imperdiet&duis=sapien&at=urna&velit=pretium&eu=nisl&est=ut&congue=volutpat",
+    "thumbnail": "http://prnewswire.com/purus/phasellus.jpg?nulla=pretium&elit=iaculis&ac=diam&nulla=erat&sed=fermentum&vel=justo&enim=nec&sit=condimentum&amet=neque&nunc=sapien&viverra=placerat&dapibus=ante&nulla=nulla&suscipit=justo&ligula=aliquam&in=quis&lacus=turpis&curabitur=eget&at=elit&ipsum=sodales&ac=scelerisque&tellus=mauris&semper=sit&interdum=amet&mauris=eros&ullamcorper=suspendisse&purus=accumsan&sit=tortor&amet=quis&nulla=turpis&quisque=sed&arcu=ante&libero=vivamus&rutrum=tortor&ac=duis&lobortis=mattis&vel=egestas",
+    "movieId": 21,
+    "nameRU": "Time Walker (a.k.a. Being From Another Planet)",
+    "nameEN": "Neverwhere"
   }
 ]
