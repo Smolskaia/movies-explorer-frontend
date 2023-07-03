@@ -57,7 +57,7 @@
   transform: scale(1.1);
 }
 
-/* .card__delete-button {
+.card__delete-button {
   background: transparent;
   background-image: url("../../images/movie-delete.svg");
   background-repeat: no-repeat;
@@ -73,7 +73,7 @@
 }
 .card__delete-button:hover {
   transform: scale(1.2);
-} */
+}
 
 .card__info-wrapper {
   display: flex;
@@ -137,9 +137,9 @@
     right: 10px;
   }
 
-  /* .card__delete-button {
+  .card__delete-button {
     top: 10px;
     right: 10px;
-  } */
+  }
 
 }

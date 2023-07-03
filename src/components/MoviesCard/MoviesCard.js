@@ -43,10 +43,10 @@ function MoviesCard(props) {
         />
       )}
       
-      {/* <button
+      <button
         type="button"
         className="card__delete-button"
-      /> */}
+      />
       <div className="card__info-wrapper">
         <label className="card__info-text">{name}</label>
         <label className="card__info-duration">1ч 17м</label>
