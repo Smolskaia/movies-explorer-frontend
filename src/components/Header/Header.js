@@ -4,16 +4,25 @@ import logo from "../../images/header-logo.svg";
 import account from "../../images/account-image.svg";
 import burger from "../../images/header-burger.svg";
 import "./Header.css";
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function Header(props) {
 
   const { isLoggedIn } = props;
-  
+
+  // состояние, которое отслеживает, 
+  // открыто ли меню, и передает это состояние в компонент BurgerMenu
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   
   const handleMenuClick = () => {
     setMenuIsOpen(!menuIsOpen);
   };
+
+  const handleCloseMenu = () => {
+    setMenuIsOpen(false);
+  };
+
+  // console.log("menuIsOpen ",menuIsOpen);
 
   return (
     <>
@@ -33,7 +42,10 @@ function Header(props) {
             Аккаунт
             <img src={account} alt="аккаунт" className='header__account-image'/>
           </Link>
-          <button className="header__button-burger" onClick={handleMenuClick}>
+          <button 
+            className="header__button-burger" 
+            onClick={handleMenuClick}
+          >
             <img src={burger} alt="бургер-меню" />
           </button>
         </div>
@@ -45,6 +57,7 @@ function Header(props) {
       </div>
       )}
     </div>
+    {menuIsOpen && <BurgerMenu menuIsOpen={menuIsOpen} handleCloseMenu={handleCloseMenu}/>}
     </>
   );
 }

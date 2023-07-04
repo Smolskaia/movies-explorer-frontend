@@ -7,17 +7,14 @@ import Footer from '../Footer/Footer';
 import { cardsList } from '../../utils/constants';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
-function Movies(props) {
-
-  const { cards, isSavedMoviesPage} = props;
-
+function Movies() {
 
   return (
     <section className="movies">
       <BurgerMenu />
       <Header
         isLoggedIn={true}
-       /* handleMenuClick={handleMenuClick} */ />
+      />
       <main>
         <SearchFilmForm/>
         <MoviesCardList

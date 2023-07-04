@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./MoviesCard.css";
-// import card from "../../images/movie-img.svg";
 
 function MoviesCard(props) {
   const {
@@ -14,13 +13,12 @@ function MoviesCard(props) {
   
   const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
 
-  // Вызываем функцию, переданную через props для сохранения
   const handleSaveButtonClick = () => {
     setIsSaveBtnActive(!isSaveBtnActive);
     handleSaveClick();
   };
 
-  console.log(isSavedMoviesPage);
+  // console.log(isSavedMoviesPage);
 
   return (
     <section className="card-container">

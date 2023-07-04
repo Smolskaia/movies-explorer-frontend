@@ -5,14 +5,16 @@ import SearchFilmForm from '../SearchFilmForm/SearchFilmForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import { savedMoviesList } from '../../utils/constants';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function SavedMovies() {
 
   return (
-    <section className="movies">
+    <section className="saved-movies">
+      <BurgerMenu />
       <Header
         isLoggedIn={true}
-       /* handleMenuClick={handleMenuClick} */ />
+      />
       <main>
         <SearchFilmForm/>
         <MoviesCardList

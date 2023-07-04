@@ -1,11 +1,13 @@
 import React from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function Profile() {
   return (
     
     <section className="profile">
+      <BurgerMenu />
       <Header isLoggedIn={true}  />
       <div className='profile__container'>
         <h3 className="profile__title">Привет, Анна!</h3>
