@@ -1,3 +1,7 @@
+# Link to the Figma Template
+https://drive.google.com/drive/folders/1oDiHFVyHCZ-dw5pVz3_1j2ahbMB2BYa-?usp=sharing  
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
