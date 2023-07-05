@@ -3,7 +3,7 @@ import "./SearchFilmCheckbox.css";
 
 function SearchFilmCheckbox() {
   return (
-    <div className="checkbox-container">
+    <div className="checkbox">
       <input
         className="checkbox-toggle"
         type="checkbox"

@@ -10,7 +10,7 @@ function MoviesCard(props) {
     isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
   } = props;
-  
+
   const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
 
   const handleSaveButtonClick = () => {
@@ -21,8 +21,12 @@ function MoviesCard(props) {
   // console.log(isSavedMoviesPage);
 
   return (
-    <section className="card-container">
-      <a href={trailerLink}>
+    <section className="card">
+      <a
+        href={trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img
           className="card__image"
           alt="картинка к фильму"
@@ -31,7 +35,10 @@ function MoviesCard(props) {
       </a>
 
       {isSavedMoviesPage ? (
-        <button type="button" className="card__delete-button" />
+        <button
+          type="button"
+          className="card__delete-button"
+        />
       ) : isSaved ? (
         <button
           type="button"
@@ -47,7 +54,7 @@ function MoviesCard(props) {
           onClick={handleSaveButtonClick}
         />
       )}
-     
+
       <div className="card__info-wrapper">
         <label className="card__info-text">{name}</label>
         <label className="card__info-duration">1ч 17м</label>

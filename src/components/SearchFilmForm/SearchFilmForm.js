@@ -25,7 +25,6 @@ function SearchFilmForm() {
         </button>
       </form>
       <SearchFilmCheckbox />
-      {/* <span className="search-film__form-line"></span> */}
     </section>
   );
 }

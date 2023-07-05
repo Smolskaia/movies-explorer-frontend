@@ -12,12 +12,12 @@ import logo from "../../images/header-logo.svg";
 function Form(props) {
   const { title, children, buttonText, question, linkText, link } = props
   return (
-    <div className="form__container">
+    <div className="form">
       <Link to="/" className="form__logo">
         <img src={logo} alt="логотип" />
       </Link>
       <h3 className="form__title">{title}</h3>
-      <form className="form">
+      <form className="form__container">
         {children}
         <button type="submit" className="form__btn-save">
           {buttonText}

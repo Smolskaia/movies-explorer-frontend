@@ -59,6 +59,11 @@
   background-color: #202020;
 }
 
+.profile__input:focus {
+  outline: 1px solid #4285F4;border-radius: 2rem;
+  background-color:#2F2F2F;
+}
+
 .profile__input-error {
   margin: 0;
   padding: 0;

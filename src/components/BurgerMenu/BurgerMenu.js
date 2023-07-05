@@ -14,9 +14,9 @@ function BurgerMenu(props) {
       <div className={"burger-menu__container"}>
         <button className="burger-menu__close-btn" onClick={handleCloseMenu}/>
         <ul className="burger-menu__items">
-          <li><NavLink to="/" className='menu__item'>Главная</NavLink></li>
-          <li><NavLink to="/movies" className='menu__item'>Фильмы</NavLink></li>
-          <li><NavLink to="/saved-movies" className='menu__item'>Сохраненные фильмы</NavLink></li>
+          <li><NavLink to="/" className='burger-menu__item'>Главная</NavLink></li>
+          <li><NavLink to="/movies" className='burger-menu__item'>Фильмы</NavLink></li>
+          <li><NavLink to="/saved-movies" className='burger-menu__item'>Сохраненные фильмы</NavLink></li>
         </ul>
         <nav className="burger-menu__account-wrapper">
           <NavLink to="/profile" className="burger-menu__account"> 
