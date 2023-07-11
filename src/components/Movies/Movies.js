@@ -16,40 +16,92 @@ function Movies(props) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // состояние информационного попапа
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false); // Состояние для открытия/закрытия InfoTooltip
   const [infoTooltipImage, setInfoTooltipImage] = useState(""); // Значение для пропса image
   const [infoTooltipMessage, setInfoTooltipMessage] = useState(""); // Значение для пропса title
+  
   const [searchMovieText, setSearchMovieText] = useState("");
 
-  
+  const [shortMovies, setShortMovies] = useState(false);
   
   // закрытие информационного попапа
   function handleCloseInfoTooltip() {
     setInfoTooltipOpen(false);
   };
 
-  // нажатие кнопки поика, если запрос - пустая строка
+  // нажатие кнопки поика
   function handleSearchBtn() {
-    if (searchMovieText.trim() === '') {
+    if (searchMovieText.trim() === '') { 
       setInfoTooltipImage(fail);
       setInfoTooltipMessage('Нужно ввести ключевое слово');
       setInfoTooltipOpen(true); // Открываем InfoTooltip
       return;
   }
-}
+    setIsLoading(true);
+    setInfoTooltipOpen(false);
+    /* setItem принимает два аргумента: ключ и его значение. 
+    Значением может быть только строка. Потому метод setItem 
+    приведёт любой аргумент к строке.Для перевода объекта в 
+    строку пользуйтесь методом JSON.stringify. Если просто 
+    передать методу setItem объект, он будет приведён к строке 
+    встроенным методом toString, результатом работы которого 
+    будет [Object object] для любого объекта. */
+    localStorage.setItem('searchMovieText', searchMovieText);
+    // Вызываем метод для загрузки фильмов
+    apiMovies.getInitialMovies()
+    .then((moviesArr) => {
+      // фильтрация массива с фильмами
+      const filteredMovies = moviesArr.filter(item => item.nameRU.toLowerCase().includes(searchMovieText));
+      // фильтрация массива с короткометражками
+      const filteredShortMovies = shortMovies ? filteredMovies.filter((item) => item.duration <= 40) : filteredMovies;
+
+      setMovies(filteredShortMovies);
+      localStorage.setItem('moviesData', JSON.stringify(filteredShortMovies));
+        if (filteredShortMovies.length === 0) {
+          setInfoTooltipImage(fail);
+          setInfoTooltipMessage('Ничего не найдено');
+          setInfoTooltipOpen(true); // Открываем InfoTooltip
+        }
+      // setIsLoading(false);
+    })
+    .catch(() => {
+      setInfoTooltipImage(fail);
+      setInfoTooltipMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      setInfoTooltipOpen(true); // Открываем InfoTooltip
+    })
+    .finally(() => setIsLoading(false))
+};
 
 useEffect(() => {
-  // Вызываем метод для загрузки фильмов
-  apiMovies.getInitialMovies()
-    .then((data) => {
-      setMovies(data);
-      setIsLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      setIsLoading(false);
-    });
-}, []);
+  const query = localStorage.getItem('searchMovieText');
+  const storageMovies = localStorage.getItem('moviesData');
+  const storageShortMovies = localStorage.getItem('shortMoviesData');
+  if (query) {
+    setSearchMovieText(query);
+  }
+  if (storageMovies) {
+    setMovies(JSON.parse(storageMovies));
+
+  }
+  if (storageShortMovies) {
+    setShortMovies(storageShortMovies === 'true');
+  }
+}, [])
+
+// рендеринг всех фильмов
+// useEffect(() => {
+//   // Вызываем метод для загрузки фильмов
+//   apiMovies.getInitialMovies()
+//     .then((data) => {
+//       setMovies(data);
+//       setIsLoading(false);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       setIsLoading(false);
+//     });
+// }, []);
 
   useEffect(() => {
     // Имитируем загрузку данных в течение 2 секунд
@@ -68,6 +120,8 @@ useEffect(() => {
           searchMovieText={searchMovieText}
           setSearchMovieText={setSearchMovieText}
           onSubmit ={handleSearchBtn}
+          shortMovies={shortMovies}
+          setShortMovies={setShortMovies}
           />
           {isLoading ? <Preloader /> : (
             <MoviesCardList
