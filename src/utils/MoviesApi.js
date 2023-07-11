@@ -23,13 +23,14 @@ class MoviesApi {
 
   // загрузка фильмов с сервера, метод GET по умолчанию
   getInitialMovies() {
-    const token = localStorage.getItem("jwt");
+    // const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}`, {
-      credentials: "include",
+      // credentials: "include",
       headers: {
-        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      //   authorization: `Bearer ${token}`,
       },
-    }).then((res) => this._checkResponse(res));
+    }).then((res) => this._checkResponse(res) /*console.log('res =>', res)*/);
   }
 }
 

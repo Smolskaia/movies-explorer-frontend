@@ -25,29 +25,28 @@ class MainApi {
 
   // аутентификация(регистрация) пользователя
   // Эндпоинт: /signup      Метод: POST
-  // возвращает userData
-  register(userData) {
+  register(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ name, email, password }),
     }).then((res) => this._checkResponse(res));
   }
 
   // авторизации(вход) пользователя
   // Эндпоинт: /signin      Метод: POST
   // возвращает token
-  authorize(userData) {
+  authorize(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(email, password),
     })
       .then((res) => this._checkResponse(res))
       .then((data) => {
@@ -56,15 +55,29 @@ class MainApi {
       });
   }
 
+  // проверка валидности токена - вызывается каждый раз при загрузке приложения
+  // при успешной проверке мы будем навигейтить в основной раздел
+  // и не нужно будет заного вводить логин и пароль
+  // Эндпоинт: /users/me      Метод: GET
+  checkToken(token) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => this._checkResponse(res));
+  }
+
   // выход из профиля
   logout() {
     return fetch(`${this._baseUrl}/signout`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then(res => {
-        return this._checkResponse(res)
-      })
+      method: "GET",
+      credentials: "include",
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
 
   // загрузка данных пользователя с сервера, GET
@@ -139,13 +152,12 @@ class MainApi {
   // сохраненные фильмы
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: this._headers
-      })
-        .then(res => {
-          return this._checkResponse(res)
-        })
+      method: "GET",
+      credentials: "include",
+      headers: this._headers,
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
 
   // удаление сохраненного фильма, DELETE-запрос

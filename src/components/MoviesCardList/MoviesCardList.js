@@ -28,11 +28,12 @@ function MoviesCardList(props) {
       <ul className="elements__list">
         {visibleCards.map((card, index) => (
           <MoviesCard
-            key={card.movieId}
-            movieId={card.movieId}
+            key={card.id}
+            movieId={card.id}
             duration={card.duration}
-            image={card.image}
+            image={card.image.url}
             name={card.nameRU}
+            trailerLink = {card.trailerLink}
             handleSaveClick={() => handleSaveClick(index)}
             isSaved={isSavedArray[index]}
             isSavedMoviesPage={isSavedMoviesPage}

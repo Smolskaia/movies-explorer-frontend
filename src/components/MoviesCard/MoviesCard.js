@@ -6,6 +6,7 @@ function MoviesCard(props) {
     trailerLink,
     name,
     image,
+    duration,
     handleSaveClick,
     isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
@@ -18,7 +19,17 @@ function MoviesCard(props) {
     handleSaveClick();
   };
 
+
+  // Функция перевода минут в часы и минуты
+  const formatDuration = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}ч ${remainingMinutes}м`;
+  };
+
   // console.log(isSavedMoviesPage);
+  // console.log(image);
+  // console.log(trailerLink);
 
   return (
     <section className="card">
@@ -30,7 +41,7 @@ function MoviesCard(props) {
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={image}
+          src={`https://api.nomoreparties.co${image}`} // Добавляем базовый URL к относительному URL изображения
         />
       </a>
 
@@ -57,7 +68,7 @@ function MoviesCard(props) {
 
       <div className="card__info-wrapper">
         <label className="card__info-text">{name}</label>
-        <label className="card__info-duration">1ч 17м</label>
+        <label className="card__info-duration">{formatDuration(duration)}</label>
       </div>
     </section>
   );
