@@ -1,8 +1,11 @@
 import React from 'react';
 import './Login.css';
 import Form from '../Form/Form';
+import { useFormValidation } from '../../utils/useFormValidation';
 
 function Login() {
+  const { values, errors, isValid, handleChange, setValue, reset, setIsValid } = useFormValidation();
+
   return (
     <Form
       title="Рады видеть!"
@@ -19,8 +22,10 @@ function Login() {
         id="email-input"
         type="email"
         required
+        value={values.email || ''}
+        onChange={handleChange}
       />
-      <span className="form__input-error"></span>
+      <span className="form__input-error">{errors.email}</span>
       <label className="form__field">
         Пароль
       </label>
@@ -30,8 +35,10 @@ function Login() {
         id="password-input"
         type="password"
         required
+        value={values.password || ''}
+        onChange={handleChange}
       />
-      <span className="form__input-error"></span>
+      <span className="form__input-error">{errors.password}</span>
     </Form>
   );
 }

@@ -38,9 +38,9 @@ function MoviesCardList(props) {
   useEffect(() => {
     setVisibleCardsCount(getVisibleCardsCount());
     setIsSavedArray(cards.map(() => false));
-// Чтобы колбэк-функция слушателя не срабатывала слишком часто, например, 
-//при изменении ширины экрана в отладчике, мы рекомендуем установить setTimeout 
-// на вызов этой функции внутри слушателя "resize".
+    // Чтобы колбэк-функция слушателя не срабатывала слишком часто, например, 
+    //при изменении ширины экрана в отладчике, устанавливаем setTimeout 
+    // на вызов этой функции внутри слушателя "resize".
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

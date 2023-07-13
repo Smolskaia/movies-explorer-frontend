@@ -1,8 +1,12 @@
 import React from 'react';
 import './Register.css';
 import Form from '../Form/Form';
+import { useFormValidation } from '../../utils/useFormValidation';
+
 
 function Register() {
+const { values, errors, isValid, handleChange, setValue, reset, setIsValid } = useFormValidation();
+
   return (
     <Form
     title="Добро пожаловать!"
@@ -21,8 +25,10 @@ function Register() {
       minLength="2"
       maxLength="40"
       required
+      value={values.name || ''}
+      onChange={handleChange}
     />
-    <span className="form__input-error"></span>
+    <span className="form__input-error">{errors.name}</span>
     <label className="form__field">
       E-mail
     </label>
@@ -32,8 +38,10 @@ function Register() {
       className="form__input"
       type="email"
       required
+      value={values.email || ''}
+      onChange={handleChange}
     />
-    <span className="form__input-error"></span>
+    <span className="form__input-error">{errors.email}</span>
     <label className="form__field">
       Пароль
     </label>
@@ -43,8 +51,10 @@ function Register() {
       className="form__input"
       type="password"
       required
+      value={values.password || ''}
+      onChange={handleChange}
     />
-    <span className="form__input-error"></span>
+    <span className="form__input-error">{errors.password}</span>
   </Form>
   );
 }
