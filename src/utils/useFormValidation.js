@@ -24,6 +24,23 @@ export function useFormValidation(initialValues = {}) {
     setIsValid(form.checkValidity())
   }
 
+  // функция handleNameChange вызывает handleChange 
+  // для обновления значения name и затем вызывает validateName 
+  // для проверки валидности имени. Если имя некорректное, 
+  // устанавливается соответствующая ошибка 
+  const handleNameChange = (evt) => {
+    const { name, value } = evt.target;
+    handleChange(evt);
+
+    if (name === 'name') {
+      const isValidName = validateName(value);
+      setErrors((oldErrors) => ({ 
+        ...oldErrors, 
+        name: isValidName ? '' : 'Имя может содержать только латиницу, кириллицу, пробел или дефис' }));
+    }
+    
+  };
+
   //функция очистки формы
   const reset = (initialValues = {}, valid = false) => {
     setValues({})
@@ -37,5 +54,13 @@ export function useFormValidation(initialValues = {}) {
     setValues((oldValues) => ({ ...oldValues, [name]: value}))
   }, [])
 
-  return { values, errors, isValid, handleChange, setValue, reset, setIsValid }
+  // функцию validateName, которая принимает значение name 
+  // и использует регулярное выражение для проверки, содержит ли поле только 
+  // латиницу, кириллицу, пробел или дефис
+  const validateName = (name) => {
+    const regex = /^[A-Za-zА-Яа-яЁё\s-]*$/
+    return regex.test(name)
+  }
+
+  return { values, errors, isValid, handleChange, handleNameChange, setValue, reset, setIsValid, validateName, setErrors }
 }

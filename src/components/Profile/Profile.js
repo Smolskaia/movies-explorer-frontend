@@ -1,8 +1,23 @@
 import React from "react";
 import "./Profile.css";
 import Header from "../Header/Header";
+import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile() {
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    handleNameChange,
+    setValue,
+    reset,
+    setIsValid,
+    validateName,
+    setErrors,
+  } = useFormValidation();
+  
+
   return (
     <>
       <Header isLoggedIn={true} />
@@ -20,10 +35,11 @@ function Profile() {
                   minLength="2"
                   maxLength="40"
                   placeholder="Имя"
-                  defaultValue="Анна"
                   required
+                  value={values.name || ""}
+                  onChange={handleNameChange}
                 />
-                <span className="profile__input-error"></span>
+                <span className="profile__input-error">{errors.name}</span>
               </div>
               <div className="profile__line"></div>
               <div className="profile__form-row">
@@ -33,10 +49,11 @@ function Profile() {
                   className="profile__input"
                   type="email"
                   placeholder="E-mail"
-                  defaultValue="sun@sun.com"
                   required
+                  value={values.email || ""}
+                  onChange={handleChange}
                 />
-                <span className="profile__input-error"></span>
+                <span className="profile__input-error">{errors.email}</span>
               </div>
               <button
                 type="submit"
