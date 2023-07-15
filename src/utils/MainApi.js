@@ -63,9 +63,9 @@ class MainApi {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        // Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     }).then((res) => this._checkResponse(res));
   }
@@ -151,10 +151,13 @@ class MainApi {
 
   // сохраненные фильмы
   getSavedMovies() {
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/movies`, {
       method: "GET",
       credentials: "include",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     }).then((res) => {
       return this._checkResponse(res);
     });

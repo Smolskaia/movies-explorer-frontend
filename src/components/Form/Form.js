@@ -17,8 +17,8 @@ function Form(props) {
     question,
     linkText,
     link,
-    isLoading,
-    isDisabled,
+    // isLoading,
+    // isDisabled,
     onSubmit,
   } = props;
   return (
@@ -37,9 +37,13 @@ function Form(props) {
         {children}
         <button
           type="submit"
+          className="form__btn-save"
+        > 
+        {/* <button
+          type="submit"
           className={`form__btn-save ${isDisabled || isLoading ? '' : 'form__btn-save_disabled'}`
         }
-        >
+        > */}
           {buttonText}
         </button>
       </form>

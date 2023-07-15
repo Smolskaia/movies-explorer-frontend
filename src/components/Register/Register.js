@@ -10,11 +10,21 @@ function Register() {
     isValid,
     handleChange,
     handleNameChange,
-    setValue,
-    reset,
-    setIsValid,
-    setErrors,
+    // setValue,
+    // reset,
+    // setIsValid,
+    // setErrors,
   } = useFormValidation();
+
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   // eslint-disable-next-line no-lone-blocks
+  //   {onRegister({
+  //     name: values.name,
+  //     email: values.email,
+  //     password: values.password,
+  //   })};
+  // }
 
   return (
     <Form

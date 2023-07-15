@@ -50,13 +50,13 @@ function App() {
   }, [loggedIn]);
 
   //регистрация
-  function handleSubmitRegister({ name, email, password }) {
+  function handleSubmitRegister(name, email, password) {
     setIsLoading(true);
     const userData = apiMain
-      .register({ name, email, password })
+      .register(name, email, password)
       .then(() => {
         if (userData) {
-          handleSubmitLogin({ email, password });
+          handleSubmitLogin(email, password);
           // console.log(userData);
           navigate("/movies", { replace: true });
         }
@@ -77,10 +77,10 @@ function App() {
   }
 
   // авторизации(вход)
-  function handleSubmitLogin({ email, password }) {
+  function handleSubmitLogin(email, password) {
     setIsLoading(true);
     const userData = apiMain
-      .authorize({ email, password })
+      .authorize(email, password )
       .then(() => {
         // console.log(userData);
         if (userData.token) {
