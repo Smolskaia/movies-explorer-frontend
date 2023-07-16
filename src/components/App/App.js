@@ -31,16 +31,15 @@ function App() {
   const [infoTooltipMessage, setInfoTooltipMessage] = useState(""); // Значение для пропса title
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   //регистрация
   function handleSubmitRegister({ name, email, password }) {
-    setIsLoading(true);
+    // setIsLoading(true);
     apiMain
       .register(name, email, password)
       .then((userData) => {
         if (userData) {
-          // console.log(userData);
           handleSubmitLogin({ email, password });
           // console.log(userData);
           // navigate("/movies", { replace: true });
@@ -53,7 +52,7 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
         // setInfoTooltipOpen(true);
         // setInfoTooltipImage(success);
         // setInfoTooltipMessage("Вы успешно зарегистрировались!");
@@ -63,9 +62,11 @@ function App() {
   // загрузка данных пользователя с сервера
   useEffect(() => { 
     if (loggedIn) {
+      // console.log(loggedIn);
       apiMain.getUserInfo()
         .then((data) => {
           setCurrentUser(data);
+          // console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -75,15 +76,16 @@ function App() {
 
   // авторизации(вход)
   function handleSubmitLogin({email, password}) {
-    setIsLoading(true);
+    // setIsLoading(true);
     
     apiMain.authorize(email, password)
       .then((data) => {
         if (data.token) {
         setLoggedIn(true);
-        localStorage.setItem("loggedIn", "true");
+        // localStorage.setItem("loggedIn", "true");
         localStorage.setItem("token", data.token); // Сохранение токена в локальное хранилище
-        setCurrentUser({email, password})
+        // setCurrentUser({email, password})
+        // console.log("data.token", data.token)
         navigate('/movies', { replace: true })
         }
       })
@@ -91,7 +93,7 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
       });
   }
   
@@ -105,8 +107,11 @@ function App() {
     .then((res) => {
       if (res) {
         setLoggedIn(true);
-        localStorage.setItem("loggedIn", "true");
+        // localStorage.setItem("loggedIn", "true");
         setCurrentUser(res.data);
+        console.log("loggedIn", loggedIn)
+        console.log("res.data", res)
+        console.log("token", token)
       }
     })
     .catch((err) => console.log(err));

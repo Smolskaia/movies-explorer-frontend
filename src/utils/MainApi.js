@@ -51,8 +51,8 @@ class MainApi {
     })
       .then((res) => this._checkResponse(res))
       .then((data) => {
-        // localStorage.setItem("jwt", data.token);
-        // console.log(data);
+        localStorage.setItem("jwt", data.token);
+        // console.log("jwt", data.token);
         return data;
       });
   }
@@ -72,16 +72,6 @@ class MainApi {
     }).then((res) => this._checkResponse(res));
   }
 
-  // выход из профиля
-  logout() {
-    return fetch(`${this._baseUrl}/signout`, {
-      method: "GET",
-      credentials: "include",
-    }).then((res) => {
-      return this._checkResponse(res);
-    });
-  }
-
   // загрузка данных пользователя с сервера, GET
   getUserInfo() {
     const token = localStorage.getItem("jwt");
@@ -93,6 +83,18 @@ class MainApi {
       },
     }).then((res) => this._checkResponse(res));
   }
+
+  // выход из профиля
+  logout() {
+    return fetch(`${this._baseUrl}/signout`, {
+      method: "GET",
+      credentials: "include",
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
+  }
+
+  
 
   // редактирование профиля, PATCH
   setUserInfo(obj) {
