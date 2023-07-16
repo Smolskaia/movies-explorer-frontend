@@ -11,7 +11,7 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip"; // Импорт компо
 import fail from "../../images/popup-fail-reg.svg";
 
 function Movies(props) {
-  const { isPopupOpen } = props;
+  const { isPopupOpen, loggedIn, logout } = props;
 
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -113,7 +113,7 @@ useEffect(() => {
 
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={true} logout={logout} />
       <main>
         <section className="movies">
           <SearchFilmForm 

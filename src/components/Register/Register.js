@@ -3,7 +3,7 @@ import "./Register.css";
 import Form from "../Form/Form";
 import { useFormValidation } from "../../utils/useFormValidation";
 
-function Register() {
+function Register({onRegister}) {
   const {
     values,
     errors,
@@ -16,15 +16,14 @@ function Register() {
     // setErrors,
   } = useFormValidation();
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   // eslint-disable-next-line no-lone-blocks
-  //   {onRegister({
-  //     name: values.name,
-  //     email: values.email,
-  //     password: values.password,
-  //   })};
-  // }
+  function handleRegister(e) {
+    e.preventDefault();
+    onRegister({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
+  }
 
   return (
     <Form
@@ -33,6 +32,7 @@ function Register() {
       question="Уже зарегистрированы?"
       linkText=" Войти"
       link="/signin"
+      handleSubmit={handleRegister}
     >
       <label className="form__field">Имя</label>
       <input

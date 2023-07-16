@@ -19,9 +19,9 @@ function MoviesCardList(props) {
 
   function getVisibleCardsCount() {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 1280) {
+    if (screenWidth >= 879) {
       return 12;
-    } else if (screenWidth >= 768) {
+    } else if (screenWidth >= 560) {
       return 8;
     } else if (screenWidth >= 320) {
       return 5;

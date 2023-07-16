@@ -3,8 +3,16 @@ import './Login.css';
 import Form from '../Form/Form';
 import { useFormValidation } from '../../utils/useFormValidation';
 
-function Login() {
+function Login({onLogin}) {
   const { values, errors, isValid, handleChange, setValue, reset, setIsValid } = useFormValidation();
+
+  function handleLogin(e) {
+    e.preventDefault();
+    onLogin({
+      email: values.email,
+      password: values.password,
+    });
+  }
 
   return (
     <Form
@@ -12,7 +20,9 @@ function Login() {
       buttonText="Войти"
       question="Еще не зарегистрированы?"
       linkText=" Регистрация"
-      link="/signup">
+      link="/signup"
+      handleSubmit={handleLogin}
+      >
       <label className="form__field">
         E-mail
       </label>

@@ -22,7 +22,7 @@ function App() {
   Затем значение переменной подставляется динамически 
   в зависимости от статуса пользователя*/
   const [loggedIn, setLoggedIn] = useState(false);
-  // переменная для отслеживания состояния загрузки во время 
+  // переменная для отслеживания состояния загрузки во время
   // ожидания ответа от сервера
   const [isLoading, setIsLoading] = useState(false);
   // состояние информационного попапа
@@ -31,95 +31,93 @@ function App() {
   const [infoTooltipMessage, setInfoTooltipMessage] = useState(""); // Значение для пропса title
 
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
 
-  // эффект при монтировании, который будет вызывать
-  // api.getUserInfo и обновлять стейт-переменную currentUser
-  // из полученного значения
-  useEffect(() => {
+  //регистрация
+  function handleSubmitRegister({ name, email, password }) {
+    setIsLoading(true);
+    apiMain
+      .register(name, email, password)
+      .then((userData) => {
+        if (userData) {
+          // console.log(userData);
+          handleSubmitLogin({ email, password });
+          // console.log(userData);
+          // navigate("/movies", { replace: true });
+        }
+      })
+      .catch((err) => {
+        // setInfoTooltipImage(fail);
+        // setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        // setInfoTooltipOpen(true); // Открываем InfoTooltip
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        // setInfoTooltipOpen(true);
+        // setInfoTooltipImage(success);
+        // setInfoTooltipMessage("Вы успешно зарегистрировались!");
+      });
+  }
+  
+  // загрузка данных пользователя с сервера
+  useEffect(() => { 
     if (loggedIn) {
-      apiMain
-        .getUserInfo()
-        .then((userData) => {
-          setCurrentUser(userData);
+      apiMain.getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
         })
         .catch((err) => {
           console.log(err);
-        });
+        })
     }
   }, [loggedIn]);
 
-  //регистрация
-  function handleSubmitRegister(name, email, password) {
-    setIsLoading(true);
-    const userData = apiMain
-      .register(name, email, password)
-      .then(() => {
-        if (userData) {
-          handleSubmitLogin(email, password);
-          // console.log(userData);
-          navigate("/movies", { replace: true });
-        }
-      })
-      .catch((err) => {
-        setInfoTooltipImage(fail);
-        setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
-        setInfoTooltipOpen(true); // Открываем InfoTooltip
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setInfoTooltipOpen(true);
-        setInfoTooltipImage(success);
-        setInfoTooltipMessage("Вы успешно зарегистрировались!");
-        // navigate('/movies');
-      });
-  }
-
   // авторизации(вход)
-  function handleSubmitLogin(email, password) {
+  function handleSubmitLogin({email, password}) {
     setIsLoading(true);
-    const userData = apiMain
-      .authorize(email, password )
-      .then(() => {
-        // console.log(userData);
-        if (userData.token) {
-          localStorage.setItem('token', userData.token)
-          // setLoggedIn(true);
-          // setCurrentUser({ email, password });
-          navigate("/movies", { replace: true });
+    
+    apiMain.authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+        setLoggedIn(true);
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("token", data.token); // Сохранение токена в локальное хранилище
+        setCurrentUser({email, password})
+        navigate('/movies', { replace: true })
         }
       })
       .catch((err) => {
-        setInfoTooltipImage(fail);
-        setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
-        setInfoTooltipOpen(true);
         console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
       });
   }
-
+  
   // функция проверки токена
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       return;
     }
-    apiMain
-      .checkToken()
-      .then((res) => {
-        if (res) {
-          // console.log(res);
-          navigate("/movies", { replace: true });
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [navigate]);
-// функция выхода из профиля
+    apiMain.checkToken(token)
+    .then((res) => {
+      if (res) {
+        setLoggedIn(true);
+        localStorage.setItem("loggedIn", "true");
+        setCurrentUser(res.data);
+      }
+    })
+    .catch((err) => console.log(err));
+
+  }, []);
+
+
+  // функция выхода из профиля
   function handleLogout() {
-    apiMain.logout()
+    apiMain
+      .logout()
       .then((res) => {
         setLoggedIn(false);
         setCurrentUser({});
@@ -129,19 +127,19 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
-// изменение данных пользователя
-function handleUserUpdate(inputData) {
-  setIsLoading(true);
-  apiMain
-    .setUserInfo(inputData)
-    .then((res) => {
-      setCurrentUser(res);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => setIsLoading(false));
-}
+  // изменение данных пользователя
+  function handleUserUpdate(inputData) {
+    setIsLoading(true);
+    apiMain
+      .setUserInfo(inputData)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  }
 
   return (
     <div className="app">
@@ -154,20 +152,32 @@ function handleUserUpdate(inputData) {
             />
             <Route
               path="/movies"
-              element={<ProtectedRoute element={Movies} 
-              logout={handleLogout} 
-              
-              />}
+              element={
+                <ProtectedRoute
+                  element={Movies}
+                  logout={handleLogout}
+                  login={loggedIn}
+                />
+              }
             />
             <Route
               path="/saved-movies"
-              element={<ProtectedRoute element={SavedMovies} />}
+              element={
+                <ProtectedRoute
+                  element={SavedMovies}
+                  login={loggedIn}
+                />
+              }
             />
             <Route
               path="/profile"
-              element={<ProtectedRoute element={Profile} 
-              handleUserUpdate={handleUserUpdate}
-              />}
+              element={
+                <ProtectedRoute
+                  element={Profile}
+                  handleUserUpdate={handleUserUpdate}
+                  login={loggedIn}
+                />
+              }
             />
             <Route
               path="/signin"

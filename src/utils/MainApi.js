@@ -40,17 +40,19 @@ class MainApi {
   // Эндпоинт: /signin      Метод: POST
   // возвращает token
   authorize(email, password) {
+    // console.log(email, password);
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(email, password),
+      body: JSON.stringify({email: email, password: password}),
     })
       .then((res) => this._checkResponse(res))
       .then((data) => {
-        localStorage.setItem("jwt", data.token);
+        // localStorage.setItem("jwt", data.token);
+        // console.log(data);
         return data;
       });
   }
@@ -61,7 +63,7 @@ class MainApi {
   // Эндпоинт: /users/me      Метод: GET
   checkToken(token) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
+      credentials: "include",
       headers: {
         // Accept: "application/json",
         "Content-Type": "application/json",
@@ -87,6 +89,7 @@ class MainApi {
       credentials: "include",
       headers: {
         authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     }).then((res) => this._checkResponse(res));
   }

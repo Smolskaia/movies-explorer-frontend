@@ -17,10 +17,12 @@ function Form(props) {
     question,
     linkText,
     link,
+    handleSubmit,
     // isLoading,
     // isDisabled,
-    onSubmit,
+    // onSubmit,
   } = props;
+
   return (
     <div className="form">
       <Link
@@ -33,13 +35,17 @@ function Form(props) {
         />
       </Link>
       <h3 className="form__title">{title}</h3>
-      <form className="form__container" onSubmit={onSubmit} noValidate>
+      <form
+        className="form__container"
+        onSubmit={handleSubmit}
+        noValidate
+      >
         {children}
         <button
           type="submit"
           className="form__btn-save"
-        > 
-        {/* <button
+        >
+          {/* <button
           type="submit"
           className={`form__btn-save ${isDisabled || isLoading ? '' : 'form__btn-save_disabled'}`
         }
