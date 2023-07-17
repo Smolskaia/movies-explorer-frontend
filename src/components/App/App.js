@@ -14,6 +14,7 @@ import apiMain from "../../utils/MainApi";
 import fail from "../../images/popup-fail-reg.svg";
 import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function App() {
   // переменная состояния currentUser
@@ -46,6 +47,9 @@ function App() {
         }
       })
       .catch((err) => {
+        setInfoTooltipImage(fail);
+        setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        setInfoTooltipOpen(true); // Открываем InfoTooltip
         console.log(err);
       })
       .finally(() => {
@@ -82,6 +86,9 @@ function App() {
         }
       })
       .catch((err) => {
+        setInfoTooltipImage(fail);
+        setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        setInfoTooltipOpen(true);
         console.log(err);
       })
       .finally(() => {
@@ -113,7 +120,8 @@ function App() {
 
   // функция выхода из профиля
   function handleLogout() {
-    apiMain.logout()
+    apiMain
+      .logout()
       .then((res) => {
         setLoggedIn(false);
         setCurrentUser({});
@@ -135,6 +143,11 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
+  }
+
+  // функция для закрытия информационного попапа
+  function handleCloseInfoTooltip() {
+    setInfoTooltipOpen(false);
   }
 
   // условие возвращения компонента Preloader, если isTokenChecked равно false.
@@ -185,7 +198,8 @@ function App() {
                   }
                 />
               </>
-            ) : ( //Если пользователь не вошел в систему (loggedIn === false), отображаются маршруты для Login и Register.
+            ) : (
+              //Если пользователь не вошел в систему (loggedIn === false), отображаются маршруты для Login и Register.
               <>
                 <Route
                   path="/signin"
@@ -214,6 +228,12 @@ function App() {
           </Routes>
         </CurrentUserContext.Provider>
       </div>
+      <InfoTooltip
+        image={infoTooltipImage}
+        title={infoTooltipMessage}
+        isPopupOpen={infoTooltipOpen}
+        onClose={handleCloseInfoTooltip}
+      />
     </div>
   );
 }
