@@ -120,9 +120,9 @@ function App() {
 
   // функция выхода из профиля
   function handleLogout() {
-    apiMain
-      .logout()
+    apiMain.logout()
       .then((res) => {
+        console.log(res);
         setLoggedIn(false);
         setCurrentUser({});
         localStorage.clear();
@@ -135,11 +135,13 @@ function App() {
 
   // изменение данных пользователя
   function handleUserUpdate(inputData) {
+    // console.log("inputData => ", inputData);
     setIsLoading(true);
     apiMain
       .setUserInfo(inputData)
       .then((res) => {
         setCurrentUser(res);
+        // console.log("res => ", res);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
@@ -192,7 +194,8 @@ function App() {
                   element={
                     <ProtectedRoute
                       element={Profile}
-                      handleUserUpdate={handleUserUpdate}
+                      onUpdateUser={handleUserUpdate}
+                      logout={handleLogout}
                       login={loggedIn}
                     />
                   }
