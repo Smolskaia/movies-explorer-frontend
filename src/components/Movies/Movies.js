@@ -11,7 +11,7 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip"; // Импорт компо
 import fail from "../../images/popup-fail-reg.svg";
 
 function Movies(props) {
-  const { isPopupOpen, loggedIn, logout } = props;
+  const { logout } = props;
 
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -89,19 +89,7 @@ useEffect(() => {
   }
 }, [])
 
-// рендеринг всех фильмов
-// useEffect(() => {
-//   // Вызываем метод для загрузки фильмов
-//   apiMovies.getInitialMovies()
-//     .then((data) => {
-//       setMovies(data);
-//       setIsLoading(false);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       setIsLoading(false);
-//     });
-// }, []);
+
 
   useEffect(() => {
     // Имитируем загрузку данных в течение 2 секунд

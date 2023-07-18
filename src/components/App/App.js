@@ -9,10 +9,10 @@ import Register from "../Register/Register";
 import ErrorNotFound from "../ErrorNotFound/ErrorNotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import apiMain from "../../utils/MainApi";
 import fail from "../../images/popup-fail-reg.svg";
-import success from "../../images/popup-success-reg.svg";
+// import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
@@ -81,7 +81,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
           navigate("/movies", { replace: true });
         }
       })
@@ -98,7 +98,7 @@ function App() {
 
   // функция проверки токена
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     if (!token) {
       setIsTokenChecked(true);
       return;
