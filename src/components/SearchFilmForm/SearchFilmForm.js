@@ -5,7 +5,7 @@ import icon from "../../images/search-icon.svg";
 import SearchFilmCheckbox from '../SearchFilmCheckbox/SearchFilmCheckbox';
 
 function SearchFilmForm(props) {
-  const { searchMovieText, setSearchMovieText, onSubmit, shortMovies, setShortMovies } = props;
+  const { searchMovieText, setSearchMovieText, onSubmit, isShortMovies, setIsShortMovies } = props;
 
   // Обработка изменения значения ввода
   function handleChange(event) {
@@ -38,7 +38,7 @@ function handleSubmit(event) {
           <img src={search} alt="кнопка поиск"/>
         </button>
       </form>
-      <SearchFilmCheckbox shortMovies={shortMovies} setShortMovies={setShortMovies}/>
+      <SearchFilmCheckbox isShortMovies={isShortMovies} setIsShortMovies={setIsShortMovies}/>
     </section>
   );
 }

@@ -2,13 +2,13 @@ import React from "react";
 import "./SearchFilmCheckbox.css";
 
 function SearchFilmCheckbox(props) {
-  const { shortMovies, setShortMovies } = props;
+  const { isShortMovies, setIsShortMovies } = props;
 
 // переключение чекбокса
 function checkboxToggle(event) {
   const newValue = event.target.checked;
-  setShortMovies(newValue);
-  localStorage.setItem('shortMovies', String(newValue));
+  setIsShortMovies(newValue);
+  localStorage.setItem('isShortMovies', String(newValue));
 }
 
   return (
@@ -16,7 +16,7 @@ function checkboxToggle(event) {
       <input
         className="checkbox-toggle"
         type="checkbox"
-        checked={shortMovies}
+        checked={isShortMovies}
         onChange={checkboxToggle}
       />
       <label className="checkbox__text">Короткометражки</label>
