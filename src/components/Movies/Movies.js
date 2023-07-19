@@ -4,18 +4,14 @@ import Header from "../Header/Header";
 import SearchFilmForm from "../SearchFilmForm/SearchFilmForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-// import { cardsList } from "../../utils/constants";
 import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
-import InfoTooltip from "../InfoTooltip/InfoTooltip"; // Импорт компонента InfoTooltip
-// import fail from "../../images/popup-fail-reg.svg";
 
 function Movies(props) {
   const { logout } = props;
   // состояние фильмов
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filteredShortMovies, setFilteredShortMovies] = useState([]);
   // состояние чекбокса.
   const [isShortMovies, setIsShortMovies] = useState(false);
   // состояние поисковой строки
@@ -23,27 +19,22 @@ function Movies(props) {
   // состояние загрузки
   const [isLoading, setIsLoading] = useState(true);
 
-  // состояние информационного попапа
-  const [infoTooltipOpen, setInfoTooltipOpen] = useState(false); // Состояние для открытия/закрытия InfoTooltip
-  const [infoTooltipImage, setInfoTooltipImage] = useState(""); // Значение для пропса image
-  const [infoTooltipMessage, setInfoTooltipMessage] = useState(""); // Значение для пропса title
-
-  // // закрытие информационного попапа
-  // function handleCloseInfoTooltip() {
-  //   setInfoTooltipOpen(false);
-  // }
 
   function filterMovies(allMovies, searchMovieText, isShortMovies) {
-      // Сохранение данных в локальное хранилище
+    if (searchMovieText === "") {
+      localStorage.setItem("searchMovieText", searchMovieText);
+      localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies));
+      localStorage.setItem("filteredMovies", JSON.stringify([]));
+      return [];
+    }
+  
     localStorage.setItem("searchMovieText", searchMovieText);
     localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies));
-    
-    // фильтрация массива с фильмами
+  
     const filteredMovies = allMovies.filter((item) =>
       item.nameRU.toLowerCase().includes(searchMovieText.toLowerCase())
     );
-    
-    // поиск короткометражек в полученном массиве
+  
     if (isShortMovies) {
       const filteredShortMovies = filteredMovies.filter(
         (item) => item.duration <= 40
@@ -54,8 +45,6 @@ function Movies(props) {
       localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
       return filteredMovies;
     }
-
-    
   }
 
   // переключение чекбокса
@@ -67,8 +56,6 @@ function Movies(props) {
       searchMovieText,
       newValue
     );
-    
-    // сет фильтрованных фильмов
     setFilteredMovies(filteredMovies);
     localStorage.setItem("isShortMovies", String(newValue));
   }
@@ -104,7 +91,6 @@ function Movies(props) {
         .then((data) => {
           localStorage.setItem("allMovies", JSON.stringify(data));
           setAllMovies(data);
-          // setFilteredMovies(filteredMovies);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -141,12 +127,6 @@ function Movies(props) {
             <p>Ничего не найдено</p>
           )}
           {searchMovieText === "" && <p>Введите ключевое слово для поиска</p>}
-          {/* <InfoTooltip
-            image={infoTooltipImage}
-            title={infoTooltipMessage}
-            isPopupOpen={infoTooltipOpen}
-            onClose={handleCloseInfoTooltip}
-          /> */}
         </section>
       </main>
       <Footer />
