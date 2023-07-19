@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
 import InfoTooltip from "../InfoTooltip/InfoTooltip"; // Импорт компонента InfoTooltip
-import fail from "../../images/popup-fail-reg.svg";
+// import fail from "../../images/popup-fail-reg.svg";
 
 function Movies(props) {
   const { logout } = props;
@@ -28,82 +28,90 @@ function Movies(props) {
   const [infoTooltipImage, setInfoTooltipImage] = useState(""); // Значение для пропса image
   const [infoTooltipMessage, setInfoTooltipMessage] = useState(""); // Значение для пропса title
 
-  // закрытие информационного попапа
-  function handleCloseInfoTooltip() {
-    setInfoTooltipOpen(false);
-  }
-
-  // нажатие кнопки поика
-  function handleSearchBtn() {
-    if (searchMovieText.trim() === "") {
-      setInfoTooltipImage(fail);
-      setInfoTooltipMessage("Нужно ввести ключевое слово");
-      setInfoTooltipOpen(true); // Открываем InfoTooltip
-      return;
-    }
-      // вызов функции фильтрации
-      const filteredMovies = filterMovies(
-        allMovies,
-        isShortMovies,
-        searchMovieText
-      );
-      // сет фильтрованных фильмов
-      setFilteredMovies(filteredMovies);
-    }
-  
-  useEffect(() => {
-    const query = localStorage.getItem("searchMovieText");
-    const storageMovies = localStorage.getItem("moviesData");
-    const storageShortMovies = localStorage.getItem("shortMoviesData");
-    if (query) {
-      setSearchMovieText(query);
-    }
-    if (storageMovies) {
-      setAllMovies(JSON.parse(storageMovies));
-    }
-    if (storageShortMovies) {
-      setIsShortMovies(storageShortMovies === "true");
-    }
-  }, []);
-
-  // рендеринг фильмов
-  useEffect(() => {
-    setIsLoading(true);
-    // Вызываем метод для загрузки фильмов
-    apiMovies
-      .getInitialMovies()
-      .then((data) => {
-        const filteredMovies = filterMovies(data, searchMovieText, isShortMovies);
-        setFilteredMovies(filteredMovies);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
-  }, [searchMovieText, isShortMovies]);
+  // // закрытие информационного попапа
+  // function handleCloseInfoTooltip() {
+  //   setInfoTooltipOpen(false);
+  // }
 
   function filterMovies(allMovies, searchMovieText, isShortMovies) {
+      // Сохранение данных в локальное хранилище
+    localStorage.setItem("searchMovieText", searchMovieText);
+    localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies));
+    
     // фильтрация массива с фильмами
     const filteredMovies = allMovies.filter((item) =>
-      item.nameRU.toLowerCase().includes(searchMovieText)
+      item.nameRU.toLowerCase().includes(searchMovieText.toLowerCase())
     );
+    
     // поиск короткометражек в полученном массиве
     if (isShortMovies) {
       const filteredShortMovies = filteredMovies.filter(
         (item) => item.duration <= 40
       );
-      setAllMovies(filteredShortMovies);;
+      localStorage.setItem("filteredMovies", JSON.stringify(filteredShortMovies));
+      return filteredShortMovies;
     } else {
-      setAllMovies(filteredMovies);
+      localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
+      return filteredMovies;
     }
+
+    
+  }
+
+  // переключение чекбокса
+  function checkboxToggle(event) {
+    const newValue = event.target.checked;
+    setIsShortMovies(newValue);
+    const filteredMovies = filterMovies(
+      allMovies,
+      searchMovieText,
+      newValue
+    );
+    
+    // сет фильтрованных фильмов
+    setFilteredMovies(filteredMovies);
+    localStorage.setItem("isShortMovies", String(newValue));
+  }
+
+  // нажатие кнопки поика
+  function handleSearchBtn() {
+    // вызов функции фильтрации
+    const filteredMovies = filterMovies(
+      allMovies,
+      searchMovieText,
+      isShortMovies
+    );
+    // сет фильтрованных фильмов
+    setFilteredMovies(filteredMovies);
   }
 
   useEffect(() => {
-    // Имитируем загрузку данных в течение 2 секунд
-    setTimeout(() => {
-      setIsLoading(false); // прелоадер в false через 2 секунды
-    }, 2000);
+    const query = localStorage.getItem("searchMovieText");
+    const storageMovies = localStorage.getItem("filteredMovies");
+    const storageShortMovies = localStorage.getItem("isShortMovies");
+    const storageAllMovies = localStorage.getItem("allMovies");
+    if (query && storageMovies && storageShortMovies && storageAllMovies) {
+      setSearchMovieText(query);
+      setFilteredMovies(JSON.parse(storageMovies));
+      setIsShortMovies(storageShortMovies === "true");
+      setIsLoading(false);
+      setAllMovies(JSON.parse(storageAllMovies));
+    } else {
+      setIsLoading(true);
+      // Вызываем метод для загрузки фильмов
+      apiMovies
+        .getInitialMovies()
+        .then((data) => {
+          localStorage.setItem("allMovies", JSON.stringify(data));
+          setAllMovies(data);
+          // setFilteredMovies(filteredMovies);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
   }, []);
 
   return (
@@ -119,22 +127,26 @@ function Movies(props) {
             setSearchMovieText={setSearchMovieText}
             onSubmit={handleSearchBtn}
             isShortMovies={isShortMovies}
-            setIsShortMovies={setIsShortMovies}
+            checkboxToggle={checkboxToggle}
           />
           {isLoading ? (
             <Preloader />
           ) : (
             <MoviesCardList
-              cards={allMovies}
+              cards={filteredMovies}
               isSavedMoviesPage={false}
             />
           )}
-          <InfoTooltip
+          {filteredMovies.length === 0 && searchMovieText !== "" && (
+            <p>Ничего не найдено</p>
+          )}
+          {searchMovieText === "" && <p>Введите ключевое слово для поиска</p>}
+          {/* <InfoTooltip
             image={infoTooltipImage}
             title={infoTooltipMessage}
             isPopupOpen={infoTooltipOpen}
             onClose={handleCloseInfoTooltip}
-          />
+          /> */}
         </section>
       </main>
       <Footer />
