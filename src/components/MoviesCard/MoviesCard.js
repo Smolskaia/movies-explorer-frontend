@@ -17,8 +17,8 @@ function MoviesCard(props) {
     onSave(card);
   };
 
-  const handleDeleteButtonClick = (movieId) => {
-    onDelete();
+  function handleDeleteButtonClick() {
+    onDelete(card);
   };
 
 

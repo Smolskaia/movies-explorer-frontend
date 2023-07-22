@@ -115,7 +115,7 @@ class MainApi {
   addSavedMovie(movieData) {
     const imageBaseUrl = "https://api.nomoreparties.co";
     const token = localStorage.getItem("jwt");
-    // console.log(movieData.movieId);
+    // console.log(movieData.id);
     // console.log(movieData._id);
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
@@ -134,7 +134,7 @@ class MainApi {
         image: imageBaseUrl + movieData.image.url,
         trailerLink: movieData.trailerLink,
         thumbnail: imageBaseUrl + movieData.image.formats.thumbnail.url,
-        movieId: movieData.movieId,
+        movieId: movieData.id,
         nameRU: movieData.nameRU,
         nameEN: movieData.nameEN
       }),
