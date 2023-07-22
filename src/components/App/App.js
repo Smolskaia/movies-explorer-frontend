@@ -43,8 +43,9 @@ function App() {
     console.log('movieData =>', movieData)
     apiMain
       .addSavedMovie(movieData)
-      .then((newMovie) => {
-        setSavedMovies([newMovie, ...savedMovies]);
+      .then((savedMovie) => {
+        // console.log('savedMovie =>', savedMovie)
+        setSavedMovies([savedMovie, ...savedMovies]);
       })
       .catch((err) => {
         console.log(err);
@@ -54,13 +55,14 @@ function App() {
   function getMovieById(movieId) {
     return savedMovies.find((item) => item.movieId === movieId);
   }
+
   // обработчик удаления фильма из избранного
-  function handleDeleteMovie(movieId) {
+  function handleDeleteMovie(movieData) {
     apiMain
-      .deleteSavedMovie(getMovieById(movieId)._id)
+      .deleteSavedMovie(getMovieById(movieData.movieId)._id)
       .then(() => {
         const newMoviesList = savedMovies.filter(
-          (item) => item.movieId !== movieId
+          (item) => item.movieId !== movieData.movieId
         );
         setSavedMovies(newMoviesList);
       })
