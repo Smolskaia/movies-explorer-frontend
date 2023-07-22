@@ -113,19 +113,6 @@ class MainApi {
 
   // добавление фильма в сохраненные, POST-запрос
   addSavedMovie(movieData) {
-    const {
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      nameRU,
-      nameEN,
-      thumbnail,
-      movieId,
-    } = movieData;
 
     const token = localStorage.getItem("jwt");
 
@@ -138,17 +125,17 @@ class MainApi {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        country,
-        director,
-        duration,
-        year,
-        description,
-        image,
-        trailerLink,
-        nameRU,
-        nameEN,
-        thumbnail,
-        movieId,
+        country: movieData.country,
+        director: movieData.director,
+        duration: movieData.duration,
+        year: movieData.year,
+        description: movieData.description,
+        image: movieData.image.url,
+        trailerLink: movieData.trailerLink,
+        thumbnail: movieData.thumbnail,
+        movieId: movieData._id,
+        nameRU: movieData.nameRU,
+        nameEN: movieData.nameEN
       }),
     }).then((res) => this._checkResponse(res));
   }

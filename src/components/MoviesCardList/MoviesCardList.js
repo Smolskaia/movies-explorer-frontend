@@ -64,17 +64,15 @@ function MoviesCardList(props) {
 
   const visibleCards = cards.slice(0, visibleCardsCount);
 
+
+
   return (
     <section className="elements">
       <ul className="elements__list">
         {visibleCards.map((card) => (
           <MoviesCard
             key={card.id}
-            // movieId={card.movieId}
-            duration={card.duration}
-            image={card.image.url}
-            name={card.nameRU}
-            trailerLink = {card.trailerLink}
+            card={card}
             // isSaved={savedMovies.some((item) => {
             //   return item.movieId === card.movieId;
             // })}

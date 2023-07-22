@@ -3,41 +3,18 @@ import "./MoviesCard.css";
 
 function MoviesCard(props) {
   const {
-    trailerLink,
-    name,
-    image,
-    duration,
     onSave,
     onDelete,
     isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
-    country,
-    director,
-    year,
-    description,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
+    card,
   } = props;
 
   const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
 
   function handleSaveButtonClick() {
     setIsSaveBtnActive(!isSaveBtnActive);
-    onSave({
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      nameRU,
-      nameEN,
-      thumbnail,
-      movieId,
-    });
+    onSave(card);
   };
 
   const handleDeleteButtonClick = (movieId) => {
@@ -55,18 +32,19 @@ function MoviesCard(props) {
   // console.log(isSavedMoviesPage);
   // console.log(image);
   // console.log(trailerLink);
+  
 
   return (
     <section className="card">
       <a
-        href={trailerLink}
+        href={card.trailerLink}
         target="_blank"
         rel="noreferrer"
       >
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={`https://api.nomoreparties.co${image}`} // Добавляем базовый URL к относительному URL изображения
+          src={`https://api.nomoreparties.co${card.image.url}`} // Добавляем базовый URL к относительному URL изображения
         />
       </a>
 
@@ -93,8 +71,8 @@ function MoviesCard(props) {
       )}
 
       <div className="card__info-wrapper">
-        <label className="card__info-text">{name}</label>
-        <label className="card__info-duration">{formatDuration(duration)}</label>
+        <label className="card__info-text">{card.nameRU}</label>
+        <label className="card__info-duration">{formatDuration(card.duration)}</label>
       </div>
     </section>
   );
