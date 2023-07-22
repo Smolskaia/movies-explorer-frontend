@@ -6,16 +6,20 @@ function MoviesCardList(props) {
 
   const { 
     cards, 
-    isSavedMoviesPage } = props; 
+    isSavedMoviesPage,
+    savedMovies,
+    onDelete,
+    onSave,
+   } = props; 
 
-  const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
+  // const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
   const [visibleCardsCount, setVisibleCardsCount] = useState(getVisibleCardsCount());
 
-  function handleSaveClick(index) {
-    const updatedArray = [...isSavedArray];
-    updatedArray[index] = !updatedArray[index];
-    setIsSavedArray(updatedArray);
-  };
+  // function handleSaveClick(index) {
+  //   const updatedArray = [...isSavedArray];
+  //   updatedArray[index] = !updatedArray[index];
+  //   setIsSavedArray(updatedArray);
+  // };
 
   function getVisibleCardsCount() {
     const screenWidth = window.innerWidth;
@@ -37,7 +41,6 @@ function MoviesCardList(props) {
 
   useEffect(() => {
     setVisibleCardsCount(getVisibleCardsCount());
-    setIsSavedArray(cards.map(() => false));
     // Чтобы колбэк-функция слушателя не срабатывала слишком часто, например, 
     //при изменении ширины экрана в отладчике, устанавливаем setTimeout 
     // на вызов этой функции внутри слушателя "resize".
@@ -64,17 +67,21 @@ function MoviesCardList(props) {
   return (
     <section className="elements">
       <ul className="elements__list">
-        {visibleCards.map((card, index) => (
+        {visibleCards.map((card) => (
           <MoviesCard
             key={card.id}
-            movieId={card.id}
+            // movieId={card.movieId}
             duration={card.duration}
             image={card.image.url}
             name={card.nameRU}
             trailerLink = {card.trailerLink}
-            handleSaveClick={() => handleSaveClick(index)}
-            isSaved={isSavedArray[index]}
+            // isSaved={savedMovies.some((item) => {
+            //   return item.movieId === card.movieId;
+            // })}
             isSavedMoviesPage={isSavedMoviesPage}
+            savedMovies={savedMovies}
+            onDelete={onDelete} // Прокидываем onDelete всегда
+            onSave={!isSavedMoviesPage ? onSave : undefined} // Прокидываем onSave на всех страницах кроме SavedMovies
           />
         ))}
       </ul>

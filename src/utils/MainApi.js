@@ -47,7 +47,7 @@ class MainApi {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({email: email, password: password}),
+      body: JSON.stringify({ email: email, password: password }),
     })
       .then((res) => this._checkResponse(res))
       .then((data) => {
@@ -94,8 +94,6 @@ class MainApi {
     });
   }
 
-  
-
   // редактирование профиля, PATCH
   setUserInfo(obj) {
     const token = localStorage.getItem("jwt");
@@ -123,10 +121,10 @@ class MainApi {
       description,
       image,
       trailerLink,
-      thumbnail,
-      id,
       nameRU,
       nameEN,
+      thumbnail,
+      movieId,
     } = movieData;
 
     const token = localStorage.getItem("jwt");
@@ -137,6 +135,7 @@ class MainApi {
       headers: {
         authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         country,
@@ -146,10 +145,10 @@ class MainApi {
         description,
         image,
         trailerLink,
-        thumbnail,
-        movieId: id,
         nameRU,
         nameEN,
+        thumbnail,
+        movieId,
       }),
     }).then((res) => this._checkResponse(res));
   }

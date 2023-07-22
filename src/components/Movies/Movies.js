@@ -8,7 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
 
 function Movies(props) {
-  const { logout } = props;
+  const { logout, onSave, onDelete } = props;
   // состояние фильмов
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -121,6 +121,8 @@ function Movies(props) {
             <MoviesCardList
               cards={filteredMovies}
               isSavedMoviesPage={false}
+              onSave={onSave}
+              onDelete={onDelete}
             />
           )}
           {filteredMovies.length === 0 && searchMovieText !== "" && (

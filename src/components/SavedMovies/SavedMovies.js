@@ -6,7 +6,9 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { savedMoviesList } from "../../utils/constants";
 
-function SavedMovies() {
+function SavedMovies(props) {
+  const { onDelete } = props;
+
   return (
     <>
       <Header isLoggedIn={true} />
@@ -16,6 +18,7 @@ function SavedMovies() {
           <MoviesCardList
             cards={savedMoviesList}
             isSavedMoviesPage={true}
+            onDelete={onDelete}
           />
         </section>
       </main>

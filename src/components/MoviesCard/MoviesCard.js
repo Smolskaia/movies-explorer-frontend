@@ -7,16 +7,41 @@ function MoviesCard(props) {
     name,
     image,
     duration,
-    handleSaveClick,
+    onSave,
+    onDelete,
     isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
+    country,
+    director,
+    year,
+    description,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
   } = props;
 
   const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
 
-  const handleSaveButtonClick = () => {
+  function handleSaveButtonClick() {
     setIsSaveBtnActive(!isSaveBtnActive);
-    handleSaveClick();
+    onSave({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId,
+    });
+  };
+
+  const handleDeleteButtonClick = (movieId) => {
+    onDelete();
   };
 
 
@@ -49,6 +74,7 @@ function MoviesCard(props) {
         <button
           type="button"
           className="card__delete-button"
+          onClick={handleDeleteButtonClick}
         />
       ) : isSaved ? (
         <button
@@ -56,7 +82,7 @@ function MoviesCard(props) {
           className={`card__save-btn ${
             isSaveBtnActive ? "card__save-btn_active" : ""
           }`}
-          onClick={handleSaveButtonClick}
+          onClick={handleDeleteButtonClick}
         />
       ) : (
         <button

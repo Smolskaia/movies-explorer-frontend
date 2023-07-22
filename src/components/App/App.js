@@ -28,13 +28,46 @@ function App() {
   const [isTokenChecked, setIsTokenChecked] = useState(false);
   // переменная для отслеживания состояния загрузки во время
   // ожидания ответа от сервера
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // состояние информационного попапа
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [infoTooltipImage, setInfoTooltipImage] = useState("");
   const [infoTooltipMessage, setInfoTooltipMessage] = useState("");
 
+  const [savedMovies, setSavedMovies] = useState([]);
+
   const navigate = useNavigate();
+
+
+  function handleSaveMovie(movieData) {
+    console.log('movieData =>', movieData)
+    apiMain
+      .addSavedMovie(movieData)
+      .then((newMovie) => {
+        setSavedMovies([newMovie, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  
+  function getMovieById(movieId) {
+    return savedMovies.find((item) => item.movieId === movieId);
+  }
+  // обработчик удаления фильма из избранного
+  function handleDeleteMovie(movieId) {
+    apiMain
+      .deleteSavedMovie(getMovieById(movieId)._id)
+      .then(() => {
+        const newMoviesList = savedMovies.filter(
+          (item) => item.movieId !== movieId
+        );
+        setSavedMovies(newMoviesList);
+      })
+      .catch((err) => {
+        console.log("Фильм с указанным movieId не найден.", err);
+      });
+  }
 
   //регистрация
   function handleSubmitRegister({ name, email, password }) {
@@ -121,8 +154,7 @@ function App() {
   // функция выхода из профиля
   function handleLogout() {
     apiMain.logout()
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setLoggedIn(false);
         setCurrentUser({});
         localStorage.clear();
@@ -177,6 +209,10 @@ function App() {
                       element={Movies}
                       logout={handleLogout}
                       login={loggedIn}
+                      onSave={handleSaveMovie}
+                      onDelete={handleDeleteMovie}
+                      savedMovies={savedMovies}
+                      setSavedMovies={setSavedMovies}
                     />
                   }
                 />
@@ -186,6 +222,9 @@ function App() {
                     <ProtectedRoute
                       element={SavedMovies}
                       login={loggedIn}
+                      onDelete={handleDeleteMovie}
+                      savedMovies={savedMovies}
+                      setSavedMovies={setSavedMovies}
                     />
                   }
                 />
