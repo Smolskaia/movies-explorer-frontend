@@ -1,29 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "./MoviesCard.css";
-import { formatDuration } from "../../utils/utils";
+import { formatDuration } from '../../utils/utils';
 
 function MoviesCard(props) {
   const {
     onSave,
     onDelete,
-    isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
     card,
     savedMovies,
   } = props;
 
-  const [isSaveBtnActive, setIsSaveBtnActive] = useState(
-    localStorage.getItem(card.id) === "true" ? true : false
-  );
-  // При изменении состояния кнопки сохраняем его в локальное хранилище
-  useEffect(() => {
-    localStorage.setItem(card.id, isSaveBtnActive.toString());
-  }, [card.id, isSaveBtnActive]);
-  
-  // console.log("card", card);
+  // const [isSaveBtnActive, setIsSaveBtnActive] = useState(false);
+
+  console.log("savedMovies", savedMovies);
+
+const isSaved =savedMovies.some((m) => m.movieId === card.id);
 
   function handleButtonClick() {
-    console.log("isSaved", isSaved);
     if (isSaved) {
       // Если фильм уже сохранен, вызываем функцию onDelete для удаления фильма из списка сохраненных
       onDelete(savedMovies.find((m) => m.movieId === card.id));
@@ -31,17 +25,17 @@ function MoviesCard(props) {
     } else {
       // Если фильм еще не сохранен, вызываем функцию onSave для добавления фильма в список сохраненных
       onSave(card);
-      setIsSaveBtnActive(!isSaveBtnActive);
+      // setIsSaveBtnActive(!isSaveBtnActive);
     }
   }
 
   function handleDeleteButtonClick() {
     onDelete(card);
   }
+  
 
-  const saveButtonClassName = `${
-    isSaveBtnActive ? "card__save-btn_active" : "card__save-btn"
-  }`;
+  const saveButtonClassName = `${isSaved ? "card__save-btn_active" : "card__save-btn"}`;
+
 
   return (
     <section className="card">
@@ -53,11 +47,7 @@ function MoviesCard(props) {
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={
-            isSavedMoviesPage
-              ? card.image
-              : `https://api.nomoreparties.co/${card.image.url}`
-          } 
+          src={isSavedMoviesPage ? card.image : `https://api.nomoreparties.co/${card.image.url}`} // Добавляем базовый URL к относительному URL изображения
         />
       </a>
 

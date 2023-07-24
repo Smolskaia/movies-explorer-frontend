@@ -20,6 +20,7 @@ function SavedMovies(props) {
   const { onDelete } = props;
 
   const savedMovies = getMoviesOnLocalStorage();
+  console.log("savedMovies:", savedMovies);
 
   // const [filteredMovies, setFilteredMovies] = useState([savedMovies]);
   // // состояние чекбокса.
@@ -39,6 +40,7 @@ function SavedMovies(props) {
             cards={savedMovies}
             isSavedMoviesPage={true}
             onDelete={onDelete}
+            savedMovies={savedMovies}
           />
         </section>
       </main>
