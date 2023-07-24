@@ -159,16 +159,19 @@ function App() {
 
   // функция выхода из профиля
   function handleLogout() {
-    apiMain.logout()
-      .then(() => {
-        setLoggedIn(false);
-        setCurrentUser({});
-        localStorage.clear();
-        navigate("/", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setLoggedIn(false);
+    localStorage.removeItem('jwt');
+    navigate('/');
+    // apiMain.logout()
+    //   .then(() => {
+    //     setLoggedIn(false);
+    //     setCurrentUser({});
+    //     localStorage.clear();
+    //     navigate("/", { replace: true });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   // изменение данных пользователя
@@ -178,8 +181,8 @@ function App() {
     apiMain
       .setUserInfo(inputData)
       .then((res) => {
-        setCurrentUser(res);
-        // console.log("res => ", res);
+        setCurrentUser(res.data);
+        console.log("res => ", res.data);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
@@ -213,7 +216,7 @@ function App() {
                   element={
                     <ProtectedRoute
                       element={Movies}
-                      logout={handleLogout}
+                  
                       login={loggedIn}
                       onSave={handleSaveMovie}
                       onDelete={handleDeleteMovie}

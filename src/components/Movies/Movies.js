@@ -8,7 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
 
 function Movies(props) {
-  const { logout, onSave, onDelete, savedMovies } = props;
+  const { onSave, onDelete, savedMovies } = props;
   // состояние фильмов
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -104,7 +104,6 @@ function Movies(props) {
     <>
       <Header
         isLoggedIn={true}
-        logout={logout}
       />
       <main>
         <section className="movies">

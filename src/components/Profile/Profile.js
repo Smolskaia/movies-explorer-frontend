@@ -5,15 +5,13 @@ import Header from "../Header/Header";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile(props) {
-  const { onUpdateUser } = props;
+  const { onUpdateUser, logout } = props;
 
   const {
     values,
     errors,
     isValid,
     handleChange,
-    // handleNameChange,
-    handleLogout,
     setValue,
     reset,
     setIsValid,
@@ -51,6 +49,10 @@ function Profile(props) {
 
   function handleEdit() {
     setIsEditing(true);
+  }
+
+  function onLogout() {
+    logout();
   }
   
 
@@ -101,6 +103,7 @@ function Profile(props) {
                 <button
                   type="submit"
                   className="profile__button-save profile__button"
+                  disabled={!isValid}
                 >
                   Сохранить
                 </button>
@@ -116,7 +119,7 @@ function Profile(props) {
               <button
                 type="button"
                 className="profile__button-logout profile__button"
-                onClick={handleLogout}
+                onClick={onLogout}
               >
                 Выйти из аккаунта
               </button>
