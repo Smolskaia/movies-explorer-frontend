@@ -158,7 +158,8 @@ class MainApi {
   // удаление сохраненного фильма, DELETE-запрос
   deleteSavedMovie(movieId) {
     const token = localStorage.getItem("jwt");
-    return fetch(`${this._baseUrl}/movies/${movieId._id}`, {
+    // console.log('movieId =>', movieId)
+    return fetch(`${this._baseUrl}/movies/${movieId.id}`, {
       credentials: "include",
       method: "DELETE",
       headers: {

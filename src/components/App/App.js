@@ -15,6 +15,8 @@ import fail from "../../images/popup-fail-reg.svg";
 // import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { setMoviesOnLocalStorage, deleteMoviesOnLocalStorage } from "../../utils/utils";
+
 
 function App() {
   // переменная состояния currentUser
@@ -40,31 +42,33 @@ function App() {
 
 
   function handleSaveMovie(movieData) {
-    console.log('movieData =>', movieData)
     apiMain
       .addSavedMovie(movieData)
       .then((savedMovie) => {
-        // console.log('savedMovie =>', savedMovie)
-        setSavedMovies([savedMovie, ...savedMovies]);
+        setSavedMovies([savedMovie.data, ...savedMovies]);
+        setMoviesOnLocalStorage(savedMovie.data);
+        console.log('savedMovies:', savedMovies);
       })
       .catch((err) => {
         console.log(err);
       });
   }
   
-  function getMovieById(movieId) {
-    return savedMovies.find((item) => item.movieId === movieId);
-  }
+  // function getMovieById(movieId) {
+  //   return savedMovies.find((item) => item.movieId === movieId);
+  // }
 
   // обработчик удаления фильма из избранного
   function handleDeleteMovie(movieData) {
+    // console.log('movieData =>', movieData)
     apiMain
-      .deleteSavedMovie(getMovieById(movieData.movieId)._id)
+      .deleteSavedMovie({ id: movieData._id })
       .then(() => {
         const newMoviesList = savedMovies.filter(
-          (item) => item.movieId !== movieData.movieId
+          (item) => item._id !== movieData._id
         );
         setSavedMovies(newMoviesList);
+        deleteMoviesOnLocalStorage(movieData)
       })
       .catch((err) => {
         console.log("Фильм с указанным movieId не найден.", err);

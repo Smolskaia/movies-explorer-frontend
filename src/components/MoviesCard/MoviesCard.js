@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MoviesCard.css";
+import { formatDuration } from "../../utils/utils";
 
 function MoviesCard(props) {
   const {
@@ -8,31 +9,39 @@ function MoviesCard(props) {
     isSaved,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
     card,
+    savedMovies,
   } = props;
 
-  const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
+  const [isSaveBtnActive, setIsSaveBtnActive] = useState(
+    localStorage.getItem(card.id) === "true" ? true : false
+  );
+  // При изменении состояния кнопки сохраняем его в локальное хранилище
+  useEffect(() => {
+    localStorage.setItem(card.id, isSaveBtnActive.toString());
+  }, [card.id, isSaveBtnActive]);
+  
+  // console.log("card", card);
 
-  function handleSaveButtonClick() {
-    setIsSaveBtnActive(!isSaveBtnActive);
-    onSave(card);
-  };
+  function handleButtonClick() {
+    console.log("isSaved", isSaved);
+    if (isSaved) {
+      // Если фильм уже сохранен, вызываем функцию onDelete для удаления фильма из списка сохраненных
+      onDelete(savedMovies.find((m) => m.movieId === card.id));
+      console.log(card.id);
+    } else {
+      // Если фильм еще не сохранен, вызываем функцию onSave для добавления фильма в список сохраненных
+      onSave(card);
+      setIsSaveBtnActive(!isSaveBtnActive);
+    }
+  }
 
   function handleDeleteButtonClick() {
     onDelete(card);
-  };
+  }
 
-
-  // Функция перевода минут в часы и минуты
-  const formatDuration = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-    return `${hours}ч ${remainingMinutes}м`;
-  };
-
-  // console.log(isSavedMoviesPage);
-  // console.log(image);
-  // console.log(trailerLink);
-  
+  const saveButtonClassName = `${
+    isSaveBtnActive ? "card__save-btn_active" : "card__save-btn"
+  }`;
 
   return (
     <section className="card">
@@ -44,7 +53,11 @@ function MoviesCard(props) {
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={`https://api.nomoreparties.co${card.image.url}`} // Добавляем базовый URL к относительному URL изображения
+          src={
+            isSavedMoviesPage
+              ? card.image
+              : `https://api.nomoreparties.co/${card.image.url}`
+          } 
         />
       </a>
 
@@ -54,25 +67,19 @@ function MoviesCard(props) {
           className="card__delete-button"
           onClick={handleDeleteButtonClick}
         />
-      ) : isSaved ? (
-        <button
-          type="button"
-          className={`card__save-btn ${
-            isSaveBtnActive ? "card__save-btn_active" : ""
-          }`}
-          onClick={handleDeleteButtonClick}
-        />
       ) : (
         <button
           type="button"
-          className="card__save-btn"
-          onClick={handleSaveButtonClick}
-        />
+          className={saveButtonClassName}
+          onClick={handleButtonClick}
+        ></button>
       )}
 
       <div className="card__info-wrapper">
         <label className="card__info-text">{card.nameRU}</label>
-        <label className="card__info-duration">{formatDuration(card.duration)}</label>
+        <label className="card__info-duration">
+          {formatDuration(card.duration)}
+        </label>
       </div>
     </section>
   );

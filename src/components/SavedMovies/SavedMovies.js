@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SavedMovies.css";
 import Header from "../Header/Header";
 import SearchFilmForm from "../SearchFilmForm/SearchFilmForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-import { savedMoviesList } from "../../utils/constants";
+
+const getMoviesOnLocalStorage = () => {
+  const data = localStorage.getItem("savedMovies")
+
+  if (!data) {
+    return []
+  }
+  const movies = JSON.parse(data);
+
+  return movies
+}
 
 function SavedMovies(props) {
   const { onDelete } = props;
+
+  const savedMovies = getMoviesOnLocalStorage();
+
+  // const [filteredMovies, setFilteredMovies] = useState([savedMovies]);
+  // // состояние чекбокса.
+  // const [isShortMovies, setIsShortMovies] = useState(false);
+  // // состояние поисковой строки
+  // const [searchMovieText, setSearchMovieText] = useState("");
+
+  
 
   return (
     <>
@@ -16,7 +36,7 @@ function SavedMovies(props) {
         <section className="saved-movies">
           <SearchFilmForm />
           <MoviesCardList
-            cards={savedMoviesList}
+            cards={savedMovies}
             isSavedMoviesPage={true}
             onDelete={onDelete}
           />

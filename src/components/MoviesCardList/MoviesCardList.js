@@ -3,17 +3,13 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
 
 function MoviesCardList(props) {
-
-  const { 
-    cards, 
-    isSavedMoviesPage,
-    savedMovies,
-    onDelete,
-    onSave,
-   } = props; 
+  const { cards, isSavedMoviesPage, savedMovies, onDelete, onSave } = props;
 
   // const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
-  const [visibleCardsCount, setVisibleCardsCount] = useState(getVisibleCardsCount());
+  const [visibleCardsCount, setVisibleCardsCount] = useState(
+    getVisibleCardsCount()
+  );
+  const path = window.location.pathname;
 
   // function handleSaveClick(index) {
   //   const updatedArray = [...isSavedArray];
@@ -31,25 +27,25 @@ function MoviesCardList(props) {
       return 5;
     }
     return 0;
-  };
+  }
 
   function handleResize() {
     setTimeout(() => {
       setVisibleCardsCount(getVisibleCardsCount());
     }, 200); // Задержка в 200 миллисекунд
-  };
+  }
 
   useEffect(() => {
     setVisibleCardsCount(getVisibleCardsCount());
-    // Чтобы колбэк-функция слушателя не срабатывала слишком часто, например, 
-    //при изменении ширины экрана в отладчике, устанавливаем setTimeout 
+    // Чтобы колбэк-функция слушателя не срабатывала слишком часто, например,
+    //при изменении ширины экрана в отладчике, устанавливаем setTimeout
     // на вызов этой функции внутри слушателя "resize".
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  
+
   const handleShowMoreClick = () => {
     if (visibleCardsCount < cards.length) {
       if (window.innerWidth >= 879) {
@@ -64,32 +60,45 @@ function MoviesCardList(props) {
 
   const visibleCards = cards.slice(0, visibleCardsCount);
 
-
-
   return (
     <section className="elements">
-      <ul className="elements__list">
-        {visibleCards.map((card) => (
-          <MoviesCard
-            key={card.id}
-            card={card}
-            // isSaved={savedMovies.some((item) => {
-            //   return item.movieId === card.movieId;
-            // })}
-            isSavedMoviesPage={isSavedMoviesPage}
-            savedMovies={savedMovies}
-            onDelete={onDelete} // Прокидываем onDelete всегда
-            onSave={!isSavedMoviesPage ? onSave : undefined} // Прокидываем onSave на всех страницах кроме SavedMovies
-          />
-        ))}
-      </ul>
+      {path === "/saved-movies" ? (
+        <ul className="elements__list">
+          {visibleCards.map((card) => (
+            <MoviesCard
+              key={`saved_movie_${card._id}`}
+              card={card}
+              isSavedMoviesPage={isSavedMoviesPage}
+              savedMovies={savedMovies}
+              onDelete={onDelete} 
+              onSave={onSave} 
+            />
+          ))}
+        </ul>
+      ) : (
+        <ul className="elements__list">
+          {visibleCards.map((card) => (
+            <MoviesCard
+              key={card.id}
+              card={card}
+              isSavedMoviesPage={isSavedMoviesPage}
+              savedMovies={savedMovies}
+              onDelete={onDelete}
+              onSave={onSave}
+            />
+          ))}
+        </ul>
+      )}
+
       {visibleCardsCount < cards.length && (
-        <button className="elements__more-btn" onClick={handleShowMoreClick}>
+        <button
+          className="elements__more-btn"
+          onClick={handleShowMoreClick}
+        >
           Ещё
         </button>
       )}
     </section>
-
   );
 }
 
