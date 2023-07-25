@@ -13,11 +13,17 @@ export const setMoviesOnLocalStorage = (movie) => {
     return 
   }
   const movies = JSON.parse(data);
-  const oldSaveMovie = movies.find( film => film._id === movie._id)
+  const oldSaveMovie = movies.find( film => film.movieId === movie.movieId)
   if (!oldSaveMovie){
     localStorage.setItem("savedMovies", JSON.stringify([...movies, movie]))
   }
   return 
+}
+
+const checkId = (movie) => {
+  if(movie.id) return movie.id
+
+  return movie.movieId
 }
 
 export const deleteMoviesOnLocalStorage = (movie) => {
@@ -27,8 +33,19 @@ export const deleteMoviesOnLocalStorage = (movie) => {
     return 
   }
   const movies = JSON.parse(data);
-  const newSavedMovies = movies.filter( film => film._id !== movie._id)
+  const newSavedMovies = movies.filter( film => film.movieId !== checkId(movie))
   localStorage.setItem("savedMovies", JSON.stringify(newSavedMovies))
 
   return 
+}
+
+export const getMoviesOnLocalStorage = () => {
+  const data = localStorage.getItem("savedMovies")
+
+  if (!data) {
+    return []
+  }
+  const movies = JSON.parse(data);
+
+  return movies
 }

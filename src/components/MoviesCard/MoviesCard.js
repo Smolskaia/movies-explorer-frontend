@@ -8,25 +8,27 @@ function MoviesCard(props) {
     onDelete,
     isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
     card,
-    savedMovies,
+    isSaved,
   } = props;
 
   // const [isSaveBtnActive, setIsSaveBtnActive] = useState(false);
 
-  console.log("savedMovies", savedMovies);
+  // console.log("savedMovies", savedMovies);
+  const [hasSave, setIsSaved] = useState(isSaved)
 
-const isSaved =savedMovies.some((m) => m.movieId === card.id);
 
   function handleButtonClick() {
-    if (isSaved) {
+    if (hasSave) {
       // Если фильм уже сохранен, вызываем функцию onDelete для удаления фильма из списка сохраненных
-      onDelete(savedMovies.find((m) => m.movieId === card.id));
-      console.log(card.id);
+      onDelete(card);
+      // console.log(card.id);
     } else {
       // Если фильм еще не сохранен, вызываем функцию onSave для добавления фильма в список сохраненных
       onSave(card);
       // setIsSaveBtnActive(!isSaveBtnActive);
     }
+
+    setIsSaved(!hasSave)
   }
 
   function handleDeleteButtonClick() {
@@ -34,7 +36,7 @@ const isSaved =savedMovies.some((m) => m.movieId === card.id);
   }
   
 
-  const saveButtonClassName = `${isSaved ? "card__save-btn_active" : "card__save-btn"}`;
+  const saveButtonClassName = `${hasSave ? "card__save-btn_active" : "card__save-btn"}`;
 
 
   return (

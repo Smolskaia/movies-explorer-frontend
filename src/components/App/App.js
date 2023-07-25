@@ -36,44 +36,32 @@ function App() {
   const [infoTooltipImage, setInfoTooltipImage] = useState("");
   const [infoTooltipMessage, setInfoTooltipMessage] = useState("");
 
-  const [savedMovies, setSavedMovies] = useState([]);
-
   const navigate = useNavigate();
 
+  // function handleSaveMovie(movieData) {
+  //   apiMain
+  //     .addSavedMovie(movieData)
+  //     .then((savedMovie) => {
+  //       setMoviesOnLocalStorage(savedMovie.data);
 
-  function handleSaveMovie(movieData) {
-    apiMain
-      .addSavedMovie(movieData)
-      .then((savedMovie) => {
-        setSavedMovies([savedMovie.data, ...savedMovies]);
-        setMoviesOnLocalStorage(savedMovie.data);
-        console.log('savedMovies:', savedMovies);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  
-  // function getMovieById(movieId) {
-  //   return savedMovies.find((item) => item.movieId === movieId);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
   // }
 
   // обработчик удаления фильма из избранного
-  function handleDeleteMovie(movieData) {
-    // console.log('movieData =>', movieData)
-    apiMain
-      .deleteSavedMovie({ id: movieData._id })
-      .then(() => {
-        const newMoviesList = savedMovies.filter(
-          (item) => item._id !== movieData._id
-        );
-        setSavedMovies(newMoviesList);
-        deleteMoviesOnLocalStorage(movieData)
-      })
-      .catch((err) => {
-        console.log("Фильм с указанным movieId не найден.", err);
-      });
-  }
+  // function handleDeleteMovie(movieData) {
+  //   console.log('movieData =>', movieData)
+  //   apiMain
+  //     .deleteSavedMovie({ id: movieData._id })
+  //     .then(() => {
+  //       deleteMoviesOnLocalStorage(movieData)
+  //     })
+  //     .catch((err) => {
+  //       console.log("Фильм с указанным movieId не найден.", err);
+  //     });
+  // }
 
   //регистрация
   function handleSubmitRegister({ name, email, password }) {
@@ -111,6 +99,21 @@ function App() {
         });
     }
   }, [loggedIn]);
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     setIsLoading(true);
+  //     Promise.all([apiMain.getUserInfo(), apiMain.getSavedMovies()])
+  //       .then(([profileInfo, moviesData]) => {
+  //         setCurrentUser(profileInfo);
+  //         setSavedMovies(moviesData.filter((x) => x.owner === currentUser._id).reverse());
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       })
+  //       .finally(() => setIsLoading(false));
+  //   }
+  // }, [loggedIn]);
 
   // авторизации(вход)
   function handleSubmitLogin({ email, password }) {
@@ -216,12 +219,9 @@ function App() {
                   element={
                     <ProtectedRoute
                       element={Movies}
-                  
                       login={loggedIn}
-                      onSave={handleSaveMovie}
-                      onDelete={handleDeleteMovie}
-                      savedMovies={savedMovies}
-                      setSavedMovies={setSavedMovies}
+                      // onSave={handleSaveMovie}
+                      // onDelete={handleDeleteMovie}
                     />
                   }
                 />
@@ -231,9 +231,7 @@ function App() {
                     <ProtectedRoute
                       element={SavedMovies}
                       login={loggedIn}
-                      onDelete={handleDeleteMovie}
-                      savedMovies={savedMovies}
-                      setSavedMovies={setSavedMovies}
+                      // onDelete={handleDeleteMovie}
                     />
                   }
                 />

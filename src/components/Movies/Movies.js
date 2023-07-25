@@ -6,9 +6,10 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
+import { setMoviesOnLocalStorage, deleteMoviesOnLocalStorage } from '../../utils/utils';
+import apiMain from "../../utils/MainApi";
 
-function Movies(props) {
-  const { onSave, onDelete, savedMovies } = props;
+function Movies() {
   // состояние фильмов
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -72,6 +73,36 @@ function Movies(props) {
     setFilteredMovies(filteredMovies);
   }
 
+  
+  function handleSaveMovie(movieData) {
+    setIsLoading(true)
+    apiMain
+      .addSavedMovie(movieData)
+      .then((savedMovie) => {
+        setMoviesOnLocalStorage(savedMovie.data);
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false)
+      });
+  }
+
+  // обработчик удаления фильма из избранного
+  function handleDeleteMovie(movieData) {
+    setIsLoading(true)
+    apiMain
+      .deleteSavedMovie({ id: movieData._id })
+      .then(() => {
+        deleteMoviesOnLocalStorage(movieData)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        console.log("Фильм с указанным movieId не найден.", err);
+        setIsLoading(false)
+      });
+  }
+
   useEffect(() => {
     const query = localStorage.getItem("searchMovieText");
     const storageMovies = localStorage.getItem("filteredMovies");
@@ -120,9 +151,8 @@ function Movies(props) {
             <MoviesCardList
               cards={filteredMovies}
               isSavedMoviesPage={false}
-              onSave={onSave}
-              onDelete={onDelete}
-              savedMovies={savedMovies}
+              onSave={handleSaveMovie}
+              onDelete={handleDeleteMovie}
             />
           )}
           {filteredMovies.length === 0 && searchMovieText !== "" && (

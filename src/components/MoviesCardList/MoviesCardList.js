@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
+import { getMoviesOnLocalStorage } from '../../utils/utils'
 
 function MoviesCardList(props) {
-  const { cards, isSavedMoviesPage, savedMovies, onDelete, onSave } = props;
+  const { cards, isSavedMoviesPage, onDelete, onSave } = props;
 
   // const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
   const [visibleCardsCount, setVisibleCardsCount] = useState(
     getVisibleCardsCount()
   );
+  const [movies, setMovies] = useState(cards);
   const path = window.location.pathname;
 
-  // function handleSaveClick(index) {
-  //   const updatedArray = [...isSavedArray];
-  //   updatedArray[index] = !updatedArray[index];
-  //   setIsSavedArray(updatedArray);
-  // };
+  const saveMovies = getMoviesOnLocalStorage();
 
   function getVisibleCardsCount() {
     const screenWidth = window.innerWidth;
@@ -46,8 +44,13 @@ function MoviesCardList(props) {
     };
   }, []);
 
+  const handleDeleteMovie = (movie) => {
+    setMovies(prev => prev.filter( m => m.movieId !== movie.movieId))
+    onDelete(movie);
+  }
+
   const handleShowMoreClick = () => {
-    if (visibleCardsCount < cards.length) {
+    if (visibleCardsCount < movies.length) {
       if (window.innerWidth >= 879) {
         setVisibleCardsCount((prevCount) => prevCount + 3);
       } else if (window.innerWidth >= 560) {
@@ -58,7 +61,16 @@ function MoviesCardList(props) {
     }
   };
 
-  const visibleCards = cards.slice(0, visibleCardsCount);
+  const visibleCards = movies.slice(0, visibleCardsCount);
+
+  const hasIsSave = (card) => {
+    return saveMovies.some( m => m.movieId === card.id)
+  }
+
+  const updateMovie = (card) => {
+    const film = saveMovies.find( m => m.movieId === card.id)
+    return film  ? {...card, _id: film._id} : card
+  }
 
   return (
     <section className="elements">
@@ -69,9 +81,7 @@ function MoviesCardList(props) {
               key={`saved_movie_${card._id}`}
               card={card}
               isSavedMoviesPage={isSavedMoviesPage}
-              savedMovies={savedMovies}
-              onDelete={onDelete} 
-              onSave={onSave} 
+              onDelete={handleDeleteMovie}
             />
           ))}
         </ul>
@@ -80,11 +90,11 @@ function MoviesCardList(props) {
           {visibleCards.map((card) => (
             <MoviesCard
               key={card.id}
-              card={card}
+              card={updateMovie(card)}
               isSavedMoviesPage={isSavedMoviesPage}
-              savedMovies={savedMovies}
               onDelete={onDelete}
               onSave={onSave}
+              isSaved={hasIsSave(card)}
             />
           ))}
         </ul>
