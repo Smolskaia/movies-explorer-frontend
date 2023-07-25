@@ -5,8 +5,8 @@ import Header from "../Header/Header";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile(props) {
-  const { onUpdateUser, logout } = props;
-
+  const { onUpdateUser, logout, isLoading } = props;
+  
   const {
     values,
     errors,
@@ -28,7 +28,7 @@ function Profile(props) {
   // его данные будут использованы в управляемых компонентах.
   useEffect(() => {
     if (currentUser && currentUser.name) {
-      // console.log("currentUser.name=>", currentUser.name)
+      console.log("currentUser.name=>", currentUser.name)
       setValue('name', currentUser.name)
       setValue('email', currentUser.email)
       if (currentUser.name && currentUser.email) {
@@ -45,6 +45,7 @@ function Profile(props) {
       name: values['name'],
       email: values['email'],
     });
+    setIsEditing(false);
   }
 
   function handleEdit() {
@@ -102,8 +103,8 @@ function Profile(props) {
               {isEditing ? (
                 <button
                   type="submit"
-                  className="profile__button-save profile__button"
-                  disabled={!isValid}
+                  className={`profile__button-save profile__button ${isValid ? '' : 'profile__button-save_disabled'}`}
+                  disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email)}
                 >
                   Сохранить
                 </button>

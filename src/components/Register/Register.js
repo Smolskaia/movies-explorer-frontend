@@ -44,7 +44,7 @@ function Register({onRegister}) {
         maxLength="40"
         required
         value={values.name || ""}
-        onChange={handleNameChange}
+        onChange={handleChange}
       />
       <span className="form__input-error">{errors.name}</span>
       <label className="form__field">E-mail</label>

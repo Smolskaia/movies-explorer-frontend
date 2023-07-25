@@ -15,7 +15,6 @@ import fail from "../../images/popup-fail-reg.svg";
 // import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import { setMoviesOnLocalStorage, deleteMoviesOnLocalStorage } from "../../utils/utils";
 
 
 function App() {
@@ -38,31 +37,6 @@ function App() {
 
   const navigate = useNavigate();
 
-  // function handleSaveMovie(movieData) {
-  //   apiMain
-  //     .addSavedMovie(movieData)
-  //     .then((savedMovie) => {
-  //       setMoviesOnLocalStorage(savedMovie.data);
-
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  // обработчик удаления фильма из избранного
-  // function handleDeleteMovie(movieData) {
-  //   console.log('movieData =>', movieData)
-  //   apiMain
-  //     .deleteSavedMovie({ id: movieData._id })
-  //     .then(() => {
-  //       deleteMoviesOnLocalStorage(movieData)
-  //     })
-  //     .catch((err) => {
-  //       console.log("Фильм с указанным movieId не найден.", err);
-  //     });
-  // }
-
   //регистрация
   function handleSubmitRegister({ name, email, password }) {
     setIsLoading(true);
@@ -76,7 +50,7 @@ function App() {
       .catch((err) => {
         setInfoTooltipImage(fail);
         setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
-        setInfoTooltipOpen(true); // Открываем InfoTooltip
+        setInfoTooltipOpen(true);
         console.log(err);
       })
       .finally(() => {
@@ -87,15 +61,17 @@ function App() {
   // загрузка данных пользователя с сервера
   useEffect(() => {
     if (loggedIn) {
-      // console.log(loggedIn);
+      setIsLoading(true); 
       apiMain
         .getUserInfo()
         .then((data) => {
           setCurrentUser(data);
-          // console.log(data);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [loggedIn]);
@@ -123,7 +99,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
-          // localStorage.setItem("token", data.token);
           navigate("/movies", { replace: true });
         }
       })
@@ -150,31 +125,24 @@ function App() {
       .then((res) => {
         if (res) {
           setLoggedIn(true);
-          setIsTokenChecked(true); //Обновлено значение isTokenChecked на true после успешной проверки токена
+          setIsTokenChecked(true);
           setCurrentUser(res.data);
-          // console.log("loggedIn", loggedIn);
-          // console.log("res.data", res);
-          // console.log("token", token);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [loggedIn]);
 
   // функция выхода из профиля
   function handleLogout() {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
-    navigate('/');
-    // apiMain.logout()
-    //   .then(() => {
-    //     setLoggedIn(false);
-    //     setCurrentUser({});
-    //     localStorage.clear();
-    //     navigate("/", { replace: true });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("searchMovieText");
+    localStorage.removeItem("savedMovies");
+    localStorage.removeItem("isShortMovies");
+    localStorage.removeItem("filteredMovies");
+    localStorage.removeItem("allMovies");
+    setCurrentUser({});
+    navigate("/");
   }
 
   // изменение данных пользователя
@@ -212,7 +180,7 @@ function App() {
               path="/"
               element={<Main />}
             />
-            {loggedIn ? ( //Если пользователь вошел в систему (loggedIn === true), отображаются маршруты для Movies, SavedMovies и Profile.
+            {loggedIn ? (
               <>
                 <Route
                   path="/movies"
@@ -220,8 +188,6 @@ function App() {
                     <ProtectedRoute
                       element={Movies}
                       login={loggedIn}
-                      // onSave={handleSaveMovie}
-                      // onDelete={handleDeleteMovie}
                     />
                   }
                 />
@@ -231,7 +197,6 @@ function App() {
                     <ProtectedRoute
                       element={SavedMovies}
                       login={loggedIn}
-                      // onDelete={handleDeleteMovie}
                     />
                   }
                 />

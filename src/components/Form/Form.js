@@ -8,6 +8,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
 import logo from "../../images/header-logo.svg";
+import { useFormValidation } from "../../utils/useFormValidation";
 
 function Form(props) {
   const {
@@ -22,6 +23,17 @@ function Form(props) {
     // isDisabled,
     // onSubmit,
   } = props;
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    setValue,
+    reset,
+    setIsValid,
+    validateName,
+    setErrors,
+  } = useFormValidation();
 
   return (
     <div className="form">
@@ -43,7 +55,8 @@ function Form(props) {
         {children}
         <button
           type="submit"
-          className="form__btn-save"
+          className={`form__btn-save ${isValid ? '' : 'form__btn-save_disabled'}`}
+          // disabled={!isValid}
         >
           {/* <button
           type="submit"

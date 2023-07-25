@@ -13,7 +13,6 @@ function SavedMovies(props) {
 
   const savedMovies = getMoviesOnLocalStorage();
   // console.log("savedMovies:", savedMovies);
-
   // const [filteredMovies, setFilteredMovies] = useState([savedMovies]);
   // // состояние чекбокса.
   // const [isShortMovies, setIsShortMovies] = useState(false);

@@ -6,12 +6,15 @@ import { getMoviesOnLocalStorage } from '../../utils/utils'
 function MoviesCardList(props) {
   const { cards, isSavedMoviesPage, onDelete, onSave } = props;
 
-  // const [isSavedArray, setIsSavedArray] = useState(cards.map(() => false));
   const [visibleCardsCount, setVisibleCardsCount] = useState(
     getVisibleCardsCount()
   );
   const [movies, setMovies] = useState(cards);
   const path = window.location.pathname;
+
+  useEffect(() => {
+    setMovies(cards)
+  }, [cards])
 
   const saveMovies = getMoviesOnLocalStorage();
 
