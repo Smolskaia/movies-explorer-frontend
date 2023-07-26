@@ -6,14 +6,12 @@ function MoviesCard(props) {
   const {
     onSave,
     onDelete,
-    isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
+    isSavedMoviesPage,
     card,
     isSaved,
   } = props;
 
-  // const [isSaveBtnActive, setIsSaveBtnActive] = useState(false);
-
-  // console.log("savedMovies", savedMovies);
+  
   const [hasSave, setIsSaved] = useState(isSaved)
 
 
@@ -49,7 +47,7 @@ function MoviesCard(props) {
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={isSavedMoviesPage ? card.image : `https://api.nomoreparties.co/${card.image.url}`} // Добавляем базовый URL к относительному URL изображения
+          src={isSavedMoviesPage ? card.image : `https://api.nomoreparties.co/${card.image.url}`}
         />
       </a>
 

@@ -1,9 +1,3 @@
-/*
-Формы: Регистрация, Вход, Редактирование профиля
-имеют общее содержимое:  
-контейнер с содержимым, логотип, форма(заголовок и инпуты), 
-кнопка сабмит и строка со ссылкой под кнопкой
-*/
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Form.css";
@@ -19,7 +13,6 @@ function Form(props) {
     link,
     handleSubmit,
     isValid,
-    isLoading,
   
   } = props;
 

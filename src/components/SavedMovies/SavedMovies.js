@@ -32,7 +32,6 @@ function SavedMovies(props) {
       });
   }
 
-  
 
   return (
     <>

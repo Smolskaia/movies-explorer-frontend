@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile(props) {
-  const { onUpdateUser, logout, isLoading } = props;
+  const { onUpdateUser, logout } = props;
   
   const {
     values,
@@ -13,10 +13,7 @@ function Profile(props) {
     isValid,
     handleChange,
     setValue,
-    reset,
     setIsValid,
-    validateName,
-    setErrors,
   } = useFormValidation();
 
   // Подписка на контекст
@@ -38,9 +35,7 @@ function Profile(props) {
   }, [currentUser, setIsValid, setValue]);
 
   function handleSubmit(evt) {
-    // Запрещаем браузеру переходить по адресу формы
     evt.preventDefault();
-    // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({
       name: values['name'],
       email: values['email'],
@@ -56,7 +51,6 @@ function Profile(props) {
     logout();
   }
   
-
   return (
     <>
       <Header isLoggedIn={true} />
@@ -80,7 +74,7 @@ function Profile(props) {
                   placeholder="Имя"
                   required
                   value={values.name || ""}
-                  onChange=/*{handleNameChange} */{handleChange}
+                  onChange={handleChange}
                   disabled={!isEditing}
                 />
                 <span className="profile__input-error">{errors.name}</span>

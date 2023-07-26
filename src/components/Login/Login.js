@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import { useFormValidation } from '../../utils/useFormValidation';
 
 function Login({onLogin}) {
-  const { values, errors, isValid, handleChange, setValue, reset, setIsValid } = useFormValidation();
+  const { values, errors, isValid, handleChange } = useFormValidation();
 
   function handleLogin(e) {
     e.preventDefault();

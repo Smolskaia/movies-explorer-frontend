@@ -9,11 +9,6 @@ function Register({onRegister}) {
     errors,
     isValid,
     handleChange,
-    handleNameChange,
-    // setValue,
-    // reset,
-    // setIsValid,
-    // setErrors,
   } = useFormValidation();
 
   function handleRegister(e) {
@@ -24,7 +19,7 @@ function Register({onRegister}) {
       password: values.password,
     });
   }
-  console.log(isValid)
+  
   return (
     <Form
       title="Добро пожаловать!"
