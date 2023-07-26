@@ -22,6 +22,8 @@
 .footer__copyright {
   margin: 0;
   padding: 0;
+  justify-content: space-between;
+  align-items: flex-start;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
