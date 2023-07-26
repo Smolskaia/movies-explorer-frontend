@@ -22,6 +22,7 @@ function Login({onLogin}) {
       linkText=" Регистрация"
       link="/signup"
       handleSubmit={handleLogin}
+      isValid={isValid}
       >
       <label className="form__field">
         E-mail
@@ -45,6 +46,8 @@ function Login({onLogin}) {
         id="password-input"
         type="password"
         required
+        minLength="2"
+        maxLength="40"
         value={values.password || ''}
         onChange={handleChange}
       />

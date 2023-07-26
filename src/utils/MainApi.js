@@ -1,8 +1,8 @@
 // описание запросов к нашему Api
 
 const apiConfigMain = {
-  baseUrl: "http://localhost:3000",
-  // baseUrl: "https://api.pro-movies.nomoredomains.rocks",
+  // baseUrl: "http://localhost:3000",
+  baseUrl: "https://api.pro-movies.nomoredomains.rocks",
   // headers: {
   //   "Content-Type": "application/json",
   // },

@@ -24,7 +24,7 @@ function Register({onRegister}) {
       password: values.password,
     });
   }
-
+  console.log(isValid)
   return (
     <Form
       title="Добро пожаловать!"
@@ -33,6 +33,7 @@ function Register({onRegister}) {
       linkText=" Войти"
       link="/signin"
       handleSubmit={handleRegister}
+      isValid={isValid}
     >
       <label className="form__field">Имя</label>
       <input
@@ -64,6 +65,8 @@ function Register({onRegister}) {
         id="password-input"
         className="form__input"
         type="password"
+        minLength="2"
+        maxLength="40"
         required
         value={values.password || ""}
         onChange={handleChange}
