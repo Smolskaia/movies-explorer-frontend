@@ -1,6 +1,11 @@
-# Проект Movies Explorer(frontend)  
+# Проект Movies Explorer(frontend)
+Дипломный проект на курсе "Веб-разработчик" от Яндекс.Практикум. 
 
-Дипломный проект на курсе "Веб-разработчик" от Яндекс.Практикум.  
+ссылка на сайт:  
+https://pro-movies.nomoredomains.rocks/     
+
+# Pull request
+ https://github.com/Smolskaia/movies-explorer-frontend/pull/2
 
 ## Стек проекта  
 
