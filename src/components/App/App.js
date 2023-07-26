@@ -11,6 +11,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import apiMain from "../../utils/MainApi";
+import { setAllMoviesOnLocalStorage } from "../../utils/utils";
 import fail from "../../images/popup-fail-reg.svg";
 // import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
@@ -76,41 +77,25 @@ function App() {
     }
   }, [loggedIn]);
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     setIsLoading(true);
-  //     Promise.all([apiMain.getUserInfo(), apiMain.getSavedMovies()])
-  //       .then(([profileInfo, moviesData]) => {
-  //         setCurrentUser(profileInfo);
-  //         setSavedMovies(moviesData.filter((x) => x.owner === currentUser._id).reverse());
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       })
-  //       .finally(() => setIsLoading(false));
-  //   }
-  // }, [loggedIn]);
-
   // авторизации(вход)
-  function handleSubmitLogin({ email, password }) {
+  async function handleSubmitLogin({ email, password }) {
     setIsLoading(true);
-    apiMain
-      .authorize(email, password)
-      .then((data) => {
-        if (data.token) {
-          setLoggedIn(true);
-          navigate("/movies", { replace: true });
-        }
-      })
-      .catch((err) => {
-        setInfoTooltipImage(fail);
-        setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
-        setInfoTooltipOpen(true);
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const data = await apiMain.authorize(email, password);
+      const {data: savedMovies} = await apiMain.getSavedMovies();
+      setAllMoviesOnLocalStorage(savedMovies)
+      if (data.token) {
+        setLoggedIn(true);
+        navigate("/movies", { replace: true });
+      }
+      setIsLoading(false);
+    } catch (err) {
+      setInfoTooltipImage(fail);
+      setInfoTooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
+      setInfoTooltipOpen(true);
+      console.log(err);
+      setIsLoading(false);
+    }
   }
 
   // функция проверки токена
@@ -213,7 +198,6 @@ function App() {
                 />
               </>
             ) : (
-              //Если пользователь не вошел в систему (loggedIn === false), отображаются маршруты для Login и Register.
               <>
                 <Route
                   path="/signin"

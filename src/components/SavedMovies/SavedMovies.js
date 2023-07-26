@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./SavedMovies.css";
 import Header from "../Header/Header";
 import SearchFilmForm from "../SearchFilmForm/SearchFilmForm";
@@ -9,27 +9,30 @@ import { deleteMoviesOnLocalStorage } from '../../utils/utils';
 import apiMain from "../../utils/MainApi";
 
 
-function SavedMovies(props) {
+function SavedMovies() {
 
   const savedMovies = getMoviesOnLocalStorage();
-  // console.log("savedMovies:", savedMovies);
-  // const [filteredMovies, setFilteredMovies] = useState([savedMovies]);
-  // // состояние чекбокса.
-  // const [isShortMovies, setIsShortMovies] = useState(false);
-  // // состояние поисковой строки
-  // const [searchMovieText, setSearchMovieText] = useState("");
+  const [isShortMovies, setIsShortMovies] = useState(false);
+  const [searchMovieText, setSearchMovieText] = useState("");
 
-  function handleDeleteMovie(movieData) {
-    console.log('movieData =>', movieData)
-    apiMain
-      .deleteSavedMovie({ id: movieData._id })
-      .then(() => {
-        console.log('after fetch')
-        deleteMoviesOnLocalStorage(movieData)
-      })
-      .catch((err) => {
-        console.log("Фильм с указанным movieId не найден.", err);
-      });
+  function handleSubmit(value) {
+    setSearchMovieText(value)
+  }
+
+  async function handleDeleteMovie(movieData) {
+    try {
+      await apiMain.deleteSavedMovie({ id: movieData._id })
+      deleteMoviesOnLocalStorage(movieData)
+    } catch (error) {
+      console.log("Фильм с указанным movieId не найден.", error);
+    }
+  }
+
+
+  const filtredMovies = (savedMovies) => {
+    return savedMovies
+      .filter( movie => isShortMovies ? movie.duration <= 40 : movie)
+      .filter( movie => searchMovieText && movie ? movie.nameRU.toLowerCase().includes(searchMovieText.toLowerCase()) : movie)
   }
 
 
@@ -38,9 +41,13 @@ function SavedMovies(props) {
       <Header isLoggedIn={true} />
       <main>
         <section className="saved-movies">
-          <SearchFilmForm />
+          <SearchFilmForm 
+            onSubmit={handleSubmit}
+            isShortMovies={isShortMovies}
+            checkboxToggle={() => setIsShortMovies(!isShortMovies)}
+          />
           <MoviesCardList
-            cards={savedMovies}
+            cards={filtredMovies(savedMovies)}
             isSavedMoviesPage={true}
             onDelete={handleDeleteMovie}
           />

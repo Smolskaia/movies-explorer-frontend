@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./SearchFilmForm.css";
 import search from "../../images/search-button.svg";
 import icon from "../../images/search-icon.svg";
@@ -13,14 +13,19 @@ function SearchFilmForm(props) {
     checkboxToggle,
   } = props;
 
+  const [searchText, setSearchText] = useState("");
+
   // Обработка изменения значения ввода
   function handleChange(event) {
-    setSearchMovieText(event.target.value);
+    if (setSearchMovieText){
+      setSearchMovieText(event.target.value);
+    }
+    setSearchText(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-    onSubmit(); // Вызываем функцию onSubmit, переданную как свойство
+    onSubmit(searchText); // Вызываем функцию onSubmit, переданную как свойство
   }
 
   return (
@@ -39,7 +44,7 @@ function SearchFilmForm(props) {
           className="search-film__input"
           type="text"
           placeholder="Фильм"
-          value={searchMovieText}
+          value={searchMovieText ?? searchText}
           onChange={handleChange}
           required
         ></input>

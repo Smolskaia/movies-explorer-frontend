@@ -20,6 +20,10 @@ export const setMoviesOnLocalStorage = (movie) => {
   return 
 }
 
+export const setAllMoviesOnLocalStorage = (movies) => {
+    localStorage.setItem("savedMovies", JSON.stringify(movies))
+}
+
 const checkId = (movie) => {
   if(movie.id) return movie.id
 
