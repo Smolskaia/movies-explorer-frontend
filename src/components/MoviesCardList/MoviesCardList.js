@@ -64,7 +64,8 @@ function MoviesCardList(props) {
     }
   };
 
-  const visibleCards = movies.slice(0, visibleCardsCount);
+  const visibleCards = path === "/saved-movies" ? movies : movies.slice(0, visibleCardsCount);
+  // const visibleCards = movies.slice(0, visibleCardsCount);
 
   const hasIsSave = (card) => {
     return saveMovies.some( m => m.movieId === card.id)
@@ -103,7 +104,7 @@ function MoviesCardList(props) {
         </ul>
       )}
 
-      {visibleCardsCount < cards.length && (
+      {path !== "/saved-movies" && visibleCardsCount < cards.length && (
         <button
           className="elements__more-btn"
           onClick={handleShowMoreClick}
