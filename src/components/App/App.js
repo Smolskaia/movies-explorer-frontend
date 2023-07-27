@@ -17,7 +17,6 @@ import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
-
 function App() {
   // переменная состояния currentUser
   const [currentUser, setCurrentUser] = useState({});
@@ -62,7 +61,7 @@ function App() {
   // загрузка данных пользователя с сервера
   useEffect(() => {
     if (loggedIn) {
-      setIsLoading(true); 
+      setIsLoading(true);
       apiMain
         .getUserInfo()
         .then((data) => {
@@ -82,8 +81,8 @@ function App() {
     setIsLoading(true);
     try {
       const data = await apiMain.authorize(email, password);
-      const {data: savedMovies} = await apiMain.getSavedMovies();
-      setAllMoviesOnLocalStorage(savedMovies)
+      const { data: savedMovies } = await apiMain.getSavedMovies();
+      setAllMoviesOnLocalStorage(savedMovies);
       if (data.token) {
         setLoggedIn(true);
         navigate("/movies", { replace: true });
@@ -145,7 +144,7 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }
 
@@ -168,65 +167,59 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={
-                <Main 
-                loggedIn={loggedIn}
-                />}
+              element={<Main loggedIn={loggedIn} />}
             />
-            {loggedIn ? (
-              <>
-                <Route
-                  path="/movies"
-                  element={
-                    <ProtectedRoute
-                      element={Movies}
-                      loggedIn={loggedIn}
-                    />
-                  }
-                />
-                <Route
-                  path="/saved-movies"
-                  element={
-                    <ProtectedRoute
-                      element={SavedMovies}
-                      loggedIn={loggedIn}
-                    />
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute
-                      element={Profile}
-                      onUpdateUser={handleUserUpdate}
-                      logout={handleLogout}
-                      loggedIn={loggedIn}
-                    />
-                  }
-                />
-              </>
-            ) : (
-              <>
-                <Route
-                  path="/signin"
-                  element={
-                    <Login
-                      isLoading={isLoading}
-                      onLogin={handleSubmitLogin}
-                    />
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <Register
-                      isLoading={isLoading}
-                      onRegister={handleSubmitRegister}
-                    />
-                  }
-                />
-              </>
-            )}
+            <>
+              <Route
+                path="/movies"
+                element={
+                  <ProtectedRoute
+                    element={Movies}
+                    loggedIn={loggedIn}
+                  />
+                }
+              />
+              <Route
+                path="/saved-movies"
+                element={
+                  <ProtectedRoute
+                    element={SavedMovies}
+                    loggedIn={loggedIn}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute
+                    element={Profile}
+                    onUpdateUser={handleUserUpdate}
+                    logout={handleLogout}
+                    loggedIn={loggedIn}
+                  />
+                }
+              />
+            </>
+            <>
+              <Route
+                path="/signin"
+                element={
+                  <Login
+                    isLoading={isLoading}
+                    onLogin={handleSubmitLogin}
+                  />
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <Register
+                    isLoading={isLoading}
+                    onRegister={handleSubmitRegister}
+                  />
+                }
+              />
+            </>
             <Route
               path="/*"
               element={<ErrorNotFound />}
