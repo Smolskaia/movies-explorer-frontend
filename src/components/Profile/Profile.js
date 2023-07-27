@@ -99,7 +99,9 @@ function Profile(props) {
               {isEditing ? (
                 <button
                   type="submit"
-                  className={`profile__button-save profile__button ${isValid ? '' : 'profile__button-save_disabled'}`}
+                  className={`profile__button-save profile__button ${!isValid || 
+                    (values.name === currentUser.name && 
+                      values.email === currentUser.email) ? 'profile__button-save_disabled' : ''}`}
                   disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email)}
                 >
                   Сохранить
