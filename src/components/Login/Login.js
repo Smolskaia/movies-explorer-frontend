@@ -2,6 +2,7 @@ import React from 'react';
 import './Login.css';
 import Form from '../Form/Form';
 import { useFormValidation } from '../../utils/useFormValidation';
+import { REGEX_EMAIL } from '../../utils/constants';
 
 function Login({onLogin}) {
   const { values, errors, isValid, handleChange } = useFormValidation();
@@ -35,6 +36,7 @@ function Login({onLogin}) {
         required
         value={values.email || ''}
         onChange={handleChange}
+        pattern={REGEX_EMAIL}
       />
       <span className="form__input-error">{errors.email}</span>
       <label className="form__field">

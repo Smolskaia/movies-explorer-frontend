@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
-import { getMoviesOnLocalStorage } from '../../utils/utils'
+import { getMoviesOnLocalStorage } from "../../utils/utils";
+import {
+  SCREEN_DESKTOP,
+  SCREEN_TABLET,
+  SCREEN_MOBILE,
+  MOVIES_COUNT_DESKTOP,
+  MOVIES_COUNT_TABLET,
+  MOVIES_COUNT_MOBILE,
+  MOVIES_ADDITIONAL_COUNT_DESKTOP,
+  MOVIES_ADDITIONAL_COUNT_TABLET,
+  MOVIES_ADDITIONAL_COUNT_MOBILE
+} from "../../utils/constants";
 
 function MoviesCardList(props) {
   const { cards, isSavedMoviesPage, onDelete, onSave } = props;
@@ -13,19 +24,19 @@ function MoviesCardList(props) {
   const path = window.location.pathname;
 
   useEffect(() => {
-    setMovies(cards)
-  }, [cards])
+    setMovies(cards);
+  }, [cards]);
 
   const saveMovies = getMoviesOnLocalStorage();
 
   function getVisibleCardsCount() {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 879) {
-      return 12;
-    } else if (screenWidth >= 560) {
-      return 8;
-    } else if (screenWidth >= 320) {
-      return 5;
+    if (screenWidth >= SCREEN_DESKTOP) {
+      return MOVIES_COUNT_DESKTOP;
+    } else if (screenWidth >= SCREEN_TABLET) {
+      return MOVIES_COUNT_TABLET;
+    } else if (screenWidth >= SCREEN_MOBILE) {
+      return MOVIES_COUNT_MOBILE;
     }
     return 0;
   }
@@ -48,33 +59,34 @@ function MoviesCardList(props) {
   }, []);
 
   const handleDeleteMovie = (movie) => {
-    setMovies(prev => prev.filter( m => m.movieId !== movie.movieId))
+    setMovies((prev) => prev.filter((m) => m.movieId !== movie.movieId));
     onDelete(movie);
-  }
+  };
 
   const handleShowMoreClick = () => {
     if (visibleCardsCount < movies.length) {
-      if (window.innerWidth >= 879) {
-        setVisibleCardsCount((prevCount) => prevCount + 3);
-      } else if (window.innerWidth >= 560) {
-        setVisibleCardsCount((prevCount) => prevCount + 2);
-      } else if (window.innerWidth >= 320) {
-        setVisibleCardsCount((prevCount) => prevCount + 2);
+      if (window.innerWidth >= SCREEN_DESKTOP) {
+        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_DESKTOP);
+      } else if (window.innerWidth >= SCREEN_TABLET) {
+        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_TABLET);
+      } else if (window.innerWidth >= SCREEN_MOBILE) {
+        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_MOBILE);
       }
     }
   };
 
-  const visibleCards = path === "/saved-movies" ? movies : movies.slice(0, visibleCardsCount);
+  const visibleCards =
+    path === "/saved-movies" ? movies : movies.slice(0, visibleCardsCount);
   // const visibleCards = movies.slice(0, visibleCardsCount);
 
   const hasIsSave = (card) => {
-    return saveMovies.some( m => m.movieId === card.id)
-  }
+    return saveMovies.some((m) => m.movieId === card.id);
+  };
 
   const updateMovie = (card) => {
-    const film = saveMovies.find( m => m.movieId === card.id)
-    return film  ? {...card, _id: film._id} : card
-  }
+    const film = saveMovies.find((m) => m.movieId === card.id);
+    return film ? { ...card, _id: film._id } : card;
+  };
 
   return (
     <section className="elements">

@@ -2,6 +2,7 @@ import React from "react";
 import "./Register.css";
 import Form from "../Form/Form";
 import { useFormValidation } from "../../utils/useFormValidation";
+import { REGEX_EMAIL } from '../../utils/constants';
 
 function Register({onRegister}) {
   const {
@@ -52,6 +53,7 @@ function Register({onRegister}) {
         required
         value={values.email || ""}
         onChange={handleChange}
+        pattern={REGEX_EMAIL}
       />
       <span className="form__input-error">{errors.email}</span>
       <label className="form__field">Пароль</label>

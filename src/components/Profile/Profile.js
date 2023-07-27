@@ -3,6 +3,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import Header from "../Header/Header";
 import { useFormValidation } from "../../utils/useFormValidation";
+import { REGEX_EMAIL } from '../../utils/constants';
 
 function Profile(props) {
   const { onUpdateUser, logout, loggedIn } = props;
@@ -91,6 +92,7 @@ function Profile(props) {
                   value={values.email || ""}
                   onChange={handleChange}
                   disabled={!isEditing}
+                  pattern={REGEX_EMAIL}
                 />
                 <span className="profile__input-error">{errors.email}</span>
               </div>
