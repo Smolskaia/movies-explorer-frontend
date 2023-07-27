@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import "./MoviesCard.css";
 import { formatDuration } from '../../utils/utils';
 
@@ -11,31 +11,19 @@ function MoviesCard(props) {
     isSaved,
   } = props;
 
-  
-  const [hasSave, setIsSaved] = useState(isSaved)
-
-
   function handleButtonClick() {
-    if (hasSave) {
-      // Если фильм уже сохранен, вызываем функцию onDelete для удаления фильма из списка сохраненных
+    if (isSaved) {
       onDelete(card);
-      // console.log(card.id);
     } else {
-      // Если фильм еще не сохранен, вызываем функцию onSave для добавления фильма в список сохраненных
       onSave(card);
-      // setIsSaveBtnActive(!isSaveBtnActive);
     }
-
-    setIsSaved(!hasSave)
   }
 
   function handleDeleteButtonClick() {
     onDelete(card);
   }
   
-
-  const saveButtonClassName = `${hasSave ? "card__save-btn_active" : "card__save-btn"}`;
-
+  const saveButtonClassName = `${isSaved ? "card__save-btn_active" : "card__save-btn"}`;
 
   return (
     <section className="card">

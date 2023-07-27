@@ -49,14 +49,18 @@ function MoviesCardList(props) {
 
   useEffect(() => {
     setVisibleCardsCount(getVisibleCardsCount());
-    // Чтобы колбэк-функция слушателя не срабатывала слишком часто, например,
-    //при изменении ширины экрана в отладчике, устанавливаем setTimeout
-    // на вызов этой функции внутри слушателя "resize".
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleSaveMovie = (movie) => {
+    onSave(movie).then(() => {
+      const movieIndex = movies.findIndex(({ id }) => id === movie.id)
+      setMovies([...movies.slice(0, movieIndex), movie, ...movies.slice(movieIndex +1)])
+    })
+  }
 
   const handleDeleteMovie = (movie) => {
     onDelete(movie).then(() => {
@@ -84,7 +88,6 @@ function MoviesCardList(props) {
 
   const visibleCards =
     path === "/saved-movies" ? movies : movies.slice(0, visibleCardsCount);
-  // const visibleCards = movies.slice(0, visibleCardsCount);
 
   const hasIsSave = (card) => {
     return saveMovies.some((m) => m.movieId === card.id);
@@ -116,7 +119,8 @@ function MoviesCardList(props) {
               card={updateMovie(card)}
               isSavedMoviesPage={isSavedMoviesPage}
               onDelete={onDelete}
-              onSave={onSave}
+              // onSave={onSave}
+              onSave={handleSaveMovie}
               isSaved={hasIsSave(card)}
             />
           ))}

@@ -47,11 +47,6 @@ function SavedMovies({ loggedIn }) {
             isShortMovies={isShortMovies}
             checkboxToggle={() => setIsShortMovies(!isShortMovies)}
           />
-          {/* <MoviesCardList
-            cards={filtredMovies(savedMovies)}
-            isSavedMoviesPage={true}
-            onDelete={handleDeleteMovie}
-          /> */}
           {filteredMoviesList.length > 0 ? (
             <MoviesCardList
               cards={filteredMoviesList}

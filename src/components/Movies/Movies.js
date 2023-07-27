@@ -76,31 +76,31 @@ function Movies({ loggedIn }) {
 
   
   function handleSaveMovie(movieData) {
-    setIsLoading(true)
-    apiMain
+    // setIsLoading(true);
+    return apiMain
       .addSavedMovie(movieData)
       .then((savedMovie) => {
         setMoviesOnLocalStorage(savedMovie.data);
-        setIsLoading(false)
+        // setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false)
+        // setIsLoading(false);
       });
   }
 
   // обработчик удаления фильма из избранного
   function handleDeleteMovie(movieData) {
-    setIsLoading(true)
-    apiMain
+    setIsLoading(true);
+    return apiMain
       .deleteSavedMovie({ id: movieData._id })
       .then(() => {
         deleteMoviesOnLocalStorage(movieData)
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("Фильм с указанным movieId не найден.", err);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }
 
@@ -131,7 +131,7 @@ function Movies({ loggedIn }) {
         });
     }
   }, []);
-  // console.log('loggedIn>>>', loggedIn)
+  
 
   return (
     <>

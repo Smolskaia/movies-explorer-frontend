@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -58,24 +59,6 @@ function App() {
       });
   }
 
-  // загрузка данных пользователя с сервера
-  useEffect(() => {
-    if (loggedIn) {
-      setIsLoading(true);
-      apiMain
-        .getUserInfo()
-        .then((data) => {
-          setCurrentUser(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [loggedIn]);
-
   // авторизации(вход)
   async function handleSubmitLogin({ email, password }) {
     setIsLoading(true);
@@ -96,6 +79,23 @@ function App() {
       setIsLoading(false);
     }
   }
+  // загрузка данных пользователя с сервера
+  useEffect(() => {
+    if (loggedIn) {
+      setIsLoading(true);
+      apiMain
+        .getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [loggedIn]);
 
   // функция проверки токена
   useEffect(() => {
@@ -153,11 +153,12 @@ function App() {
     setInfoTooltipOpen(false);
   }
 
-  // условие возвращения компонента Preloader, если isTokenChecked равно false.
-  // Если токен еще не проверен, то будет отображаться прелоадер все время
-  // проверки токена
   if (!isTokenChecked) {
     return <Preloader />;
+  }
+
+  if (loggedIn && (window.location.pathname === "/signin" || window.location.pathname === "/signup")) {
+    return <Navigate to="/" replace />;
   }
 
   return (
