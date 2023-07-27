@@ -26,7 +26,7 @@ function Profile(props) {
   // его данные будут использованы в управляемых компонентах.
   useEffect(() => {
     if (currentUser && currentUser.name) {
-      console.log("currentUser.name=>", currentUser.name)
+      // console.log("currentUser.name=>", currentUser.name)
       setValue('name', currentUser.name)
       setValue('email', currentUser.email)
       if (currentUser.name && currentUser.email) {

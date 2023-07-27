@@ -13,7 +13,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import apiMain from "../../utils/MainApi";
 import { setAllMoviesOnLocalStorage } from "../../utils/utils";
 import fail from "../../images/popup-fail-reg.svg";
-// import success from "../../images/popup-success-reg.svg";
+import success from "../../images/popup-success-reg.svg";
 import Preloader from "../Preloader/Preloader";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
@@ -137,11 +137,16 @@ function App() {
     apiMain
       .setUserInfo(inputData)
       .then((res) => {
+        setInfoTooltipImage(success);
+        setInfoTooltipMessage("Данные пользователя успешно изменены");
+        setInfoTooltipOpen(true);
         setCurrentUser(res.data);
-        console.log("res => ", res.data);
+        // console.log("res => ", res.data);
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false)
+      });
   }
 
   // функция для закрытия информационного попапа
