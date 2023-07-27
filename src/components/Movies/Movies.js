@@ -8,6 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import { apiMovies } from "../../utils/MoviesApi";
 import { setMoviesOnLocalStorage, deleteMoviesOnLocalStorage } from '../../utils/utils';
 import apiMain from "../../utils/MainApi";
+import { SHORTS_DURATION } from "../../utils/constants";
 
 function Movies({ loggedIn }) {
   // состояние фильмов
@@ -38,7 +39,7 @@ function Movies({ loggedIn }) {
   
     if (isShortMovies) {
       const filteredShortMovies = filteredMovies.filter(
-        (item) => item.duration <= 40
+        (item) => item.duration <= SHORTS_DURATION
       );
       localStorage.setItem("filteredMovies", JSON.stringify(filteredShortMovies));
       return filteredShortMovies;

@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import { getMoviesOnLocalStorage } from '../../utils/utils';
 import { deleteMoviesOnLocalStorage } from '../../utils/utils';
 import apiMain from "../../utils/MainApi";
+import { SHORTS_DURATION } from "../../utils/constants";
 
 
 function SavedMovies({ loggedIn }) {
@@ -28,13 +29,13 @@ function SavedMovies({ loggedIn }) {
     }
   }
 
-
   const filtredMovies = (savedMovies) => {
     return savedMovies
-      .filter( movie => isShortMovies ? movie.duration <= 40 : movie)
+      .filter( movie => isShortMovies ? movie.duration <= SHORTS_DURATION : movie)
       .filter( movie => searchMovieText && movie ? movie.nameRU.toLowerCase().includes(searchMovieText.toLowerCase()) : movie)
   }
 
+  const filteredMoviesList = filtredMovies(savedMovies);
 
   return (
     <>
@@ -46,11 +47,20 @@ function SavedMovies({ loggedIn }) {
             isShortMovies={isShortMovies}
             checkboxToggle={() => setIsShortMovies(!isShortMovies)}
           />
-          <MoviesCardList
+          {/* <MoviesCardList
             cards={filtredMovies(savedMovies)}
             isSavedMoviesPage={true}
             onDelete={handleDeleteMovie}
-          />
+          /> */}
+          {filteredMoviesList.length > 0 ? (
+            <MoviesCardList
+              cards={filteredMoviesList}
+              isSavedMoviesPage={true}
+              onDelete={handleDeleteMovie}
+            />
+          ) : (
+            <p>Ничего не найдено</p>
+          )}
         </section>
       </main>
       <Footer />

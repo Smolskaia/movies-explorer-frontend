@@ -11,7 +11,7 @@ import {
   MOVIES_COUNT_MOBILE,
   MOVIES_ADDITIONAL_COUNT_DESKTOP,
   MOVIES_ADDITIONAL_COUNT_TABLET,
-  MOVIES_ADDITIONAL_COUNT_MOBILE
+  MOVIES_ADDITIONAL_COUNT_MOBILE,
 } from "../../utils/constants";
 
 function MoviesCardList(props) {
@@ -59,18 +59,25 @@ function MoviesCardList(props) {
   }, []);
 
   const handleDeleteMovie = (movie) => {
-    setMovies((prev) => prev.filter((m) => m.movieId !== movie.movieId));
-    onDelete(movie);
+    onDelete(movie).then(() => {
+      setMovies((prev) => prev.filter((m) => m.movieId !== movie.movieId));
+    });
   };
 
   const handleShowMoreClick = () => {
     if (visibleCardsCount < movies.length) {
       if (window.innerWidth >= SCREEN_DESKTOP) {
-        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_DESKTOP);
+        setVisibleCardsCount(
+          (prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_DESKTOP
+        );
       } else if (window.innerWidth >= SCREEN_TABLET) {
-        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_TABLET);
+        setVisibleCardsCount(
+          (prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_TABLET
+        );
       } else if (window.innerWidth >= SCREEN_MOBILE) {
-        setVisibleCardsCount((prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_MOBILE);
+        setVisibleCardsCount(
+          (prevCount) => prevCount + MOVIES_ADDITIONAL_COUNT_MOBILE
+        );
       }
     }
   };
