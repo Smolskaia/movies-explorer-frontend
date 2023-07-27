@@ -163,7 +163,10 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Main />}
+              element={
+                <Main 
+                loggedIn={loggedIn}
+                />}
             />
             {loggedIn ? (
               <>
@@ -172,7 +175,7 @@ function App() {
                   element={
                     <ProtectedRoute
                       element={Movies}
-                      login={loggedIn}
+                      loggedIn={loggedIn}
                     />
                   }
                 />
@@ -181,7 +184,7 @@ function App() {
                   element={
                     <ProtectedRoute
                       element={SavedMovies}
-                      login={loggedIn}
+                      loggedIn={loggedIn}
                     />
                   }
                 />
@@ -192,7 +195,7 @@ function App() {
                       element={Profile}
                       onUpdateUser={handleUserUpdate}
                       logout={handleLogout}
-                      login={loggedIn}
+                      loggedIn={loggedIn}
                     />
                   }
                 />

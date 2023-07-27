@@ -9,7 +9,7 @@ import { deleteMoviesOnLocalStorage } from '../../utils/utils';
 import apiMain from "../../utils/MainApi";
 
 
-function SavedMovies() {
+function SavedMovies({ loggedIn }) {
 
   const savedMovies = getMoviesOnLocalStorage();
   const [isShortMovies, setIsShortMovies] = useState(false);
@@ -38,7 +38,7 @@ function SavedMovies() {
 
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header loggedIn={loggedIn} />
       <main>
         <section className="saved-movies">
           <SearchFilmForm 

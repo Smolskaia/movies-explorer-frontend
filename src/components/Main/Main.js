@@ -8,10 +8,11 @@ import Portfolio from '../Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({ loggedIn }) {
+  // console.log('loggedIn>>>', loggedIn)
   return (
     <>
-      <Header isLoggedIn={false}  />
+      <Header loggedIn={loggedIn}  />
       <main>
         <Promo />
         <AboutProject />

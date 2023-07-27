@@ -9,7 +9,7 @@ import { apiMovies } from "../../utils/MoviesApi";
 import { setMoviesOnLocalStorage, deleteMoviesOnLocalStorage } from '../../utils/utils';
 import apiMain from "../../utils/MainApi";
 
-function Movies() {
+function Movies({ loggedIn }) {
   // состояние фильмов
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -130,11 +130,12 @@ function Movies() {
         });
     }
   }, []);
+  // console.log('loggedIn>>>', loggedIn)
 
   return (
     <>
       <Header
-        isLoggedIn={true}
+        loggedIn={loggedIn}
       />
       <main>
         <section className="movies">

@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile(props) {
-  const { onUpdateUser, logout } = props;
+  const { onUpdateUser, logout, loggedIn } = props;
   
   const {
     values,
@@ -53,7 +53,7 @@ function Profile(props) {
   
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header loggedIn={loggedIn} />
       <main>
         <section className="profile">
           <div className="profile__container">
