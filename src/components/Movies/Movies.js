@@ -91,16 +91,13 @@ function Movies({ loggedIn }) {
 
   // обработчик удаления фильма из избранного
   function handleDeleteMovie(movieData) {
-    setIsLoading(true);
     return apiMain
       .deleteSavedMovie({ id: movieData._id })
       .then(() => {
         deleteMoviesOnLocalStorage(movieData)
-        setIsLoading(false);
       })
       .catch((err) => {
         console.log("Фильм с указанным movieId не найден.", err);
-        setIsLoading(false);
       });
   }
 

@@ -64,6 +64,13 @@ function MoviesCardList(props) {
 
   const handleDeleteMovie = (movie) => {
     onDelete(movie).then(() => {
+      const movieIndex = movies.findIndex(({ id }) => id === movie.id);
+      setMovies([...movies.slice(0, movieIndex), movie, ...movies.slice(movieIndex + 1)]);
+    });
+  };
+
+  const handleDeleteSaveMovie = (movie) => {
+    onDelete(movie).then(() => {
       setMovies((prev) => prev.filter((m) => m.movieId !== movie.movieId));
     });
   };
@@ -107,7 +114,7 @@ function MoviesCardList(props) {
               key={`saved_movie_${card._id}`}
               card={card}
               isSavedMoviesPage={isSavedMoviesPage}
-              onDelete={handleDeleteMovie}
+              onDelete={handleDeleteSaveMovie}
             />
           ))}
         </ul>
@@ -118,8 +125,7 @@ function MoviesCardList(props) {
               key={card.id}
               card={updateMovie(card)}
               isSavedMoviesPage={isSavedMoviesPage}
-              onDelete={onDelete}
-              // onSave={onSave}
+              onDelete={handleDeleteMovie}
               onSave={handleSaveMovie}
               isSaved={hasIsSave(card)}
             />
