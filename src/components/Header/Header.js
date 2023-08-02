@@ -6,9 +6,8 @@ import burger from "../../images/header-burger.svg";
 import "./Header.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-function Header(props) {
-  const { isLoggedIn } = props;
-
+function Header({ loggedIn }) {
+  
   // состояние, которое отслеживает,
   // открыто ли меню, и передает это состояние в компонент BurgerMenu
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -25,7 +24,7 @@ function Header(props) {
 
   return (
     <>
-      <header className={`header ${isLoggedIn ? "" : "header_logged-out"}`}>
+      <header className={`header ${loggedIn ? "" : "header_logged-out"}`}>
         <Link
           to="/"
           className="header__logo"
@@ -35,7 +34,7 @@ function Header(props) {
             alt="Логотип проекта"
           />
         </Link>
-        {isLoggedIn ? (
+        {loggedIn ? (
           <nav className="header__menu-loged-in">
             <div className="header__button-wrapper-loged-in">
               <NavLink

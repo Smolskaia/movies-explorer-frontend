@@ -1,15 +1,30 @@
 import React from 'react';
 import './Login.css';
 import Form from '../Form/Form';
+import { useFormValidation } from '../../utils/useFormValidation';
+import { REGEX_EMAIL } from '../../utils/constants';
 
-function Login() {
+function Login({onLogin}) {
+  const { values, errors, isValid, handleChange } = useFormValidation();
+
+  function handleLogin(e) {
+    e.preventDefault();
+    onLogin({
+      email: values.email,
+      password: values.password,
+    });
+  }
+
   return (
     <Form
       title="Рады видеть!"
       buttonText="Войти"
       question="Еще не зарегистрированы?"
       linkText=" Регистрация"
-      link="/signup">
+      link="/signup"
+      handleSubmit={handleLogin}
+      isValid={isValid}
+      >
       <label className="form__field">
         E-mail
       </label>
@@ -19,8 +34,11 @@ function Login() {
         id="email-input"
         type="email"
         required
+        value={values.email || ''}
+        onChange={handleChange}
+        pattern={REGEX_EMAIL}
       />
-      <span className="form__input-error"></span>
+      <span className="form__input-error">{errors.email}</span>
       <label className="form__field">
         Пароль
       </label>
@@ -30,8 +48,12 @@ function Login() {
         id="password-input"
         type="password"
         required
+        minLength="2"
+        maxLength="40"
+        value={values.password || ''}
+        onChange={handleChange}
       />
-      <span className="form__input-error"></span>
+      <span className="form__input-error">{errors.password}</span>
     </Form>
   );
 }

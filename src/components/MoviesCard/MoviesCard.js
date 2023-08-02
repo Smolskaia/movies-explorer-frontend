@@ -1,36 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import "./MoviesCard.css";
+import { formatDuration } from '../../utils/utils';
 
 function MoviesCard(props) {
   const {
-    trailerLink,
-    name,
-    image,
-    handleSaveClick,
+    onSave,
+    onDelete,
+    isSavedMoviesPage,
+    card,
     isSaved,
-    isSavedMoviesPage, // определяет, находится ли компонент на странице сохраненных фильмов (true) или на странице всех фильмов (false)
   } = props;
 
-  const [isSaveBtnActive, setIsSaveBtnActive] = useState(isSaved);
+  function handleButtonClick() {
+    if (isSaved) {
+      onDelete(card);
+    } else {
+      onSave(card);
+    }
+  }
 
-  const handleSaveButtonClick = () => {
-    setIsSaveBtnActive(!isSaveBtnActive);
-    handleSaveClick();
-  };
-
-  // console.log(isSavedMoviesPage);
+  function handleDeleteButtonClick() {
+    onDelete(card);
+  }
+  
+  const saveButtonClassName = `${isSaved ? "card__save-btn_active" : "card__save-btn"}`;
 
   return (
     <section className="card">
       <a
-        href={trailerLink}
+        href={card.trailerLink}
         target="_blank"
         rel="noreferrer"
       >
         <img
           className="card__image"
           alt="картинка к фильму"
-          src={image}
+          src={isSavedMoviesPage ? card.image : `https://api.nomoreparties.co/${card.image.url}`}
         />
       </a>
 
@@ -38,26 +43,21 @@ function MoviesCard(props) {
         <button
           type="button"
           className="card__delete-button"
-        />
-      ) : isSaved ? (
-        <button
-          type="button"
-          className={`card__save-btn ${
-            isSaveBtnActive ? "card__save-btn_active" : ""
-          }`}
-          onClick={handleSaveButtonClick}
+          onClick={handleDeleteButtonClick}
         />
       ) : (
         <button
           type="button"
-          className="card__save-btn"
-          onClick={handleSaveButtonClick}
-        />
+          className={saveButtonClassName}
+          onClick={handleButtonClick}
+        ></button>
       )}
 
       <div className="card__info-wrapper">
-        <label className="card__info-text">{name}</label>
-        <label className="card__info-duration">1ч 17м</label>
+        <label className="card__info-text">{card.nameRU}</label>
+        <label className="card__info-duration">
+          {formatDuration(card.duration)}
+        </label>
       </div>
     </section>
   );
